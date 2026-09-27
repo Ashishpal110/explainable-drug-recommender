@@ -27,7 +27,7 @@ class SafetyScreeningEngine:
 
     def resolve_drug_id(self, drug_identifier: Union[int, str], cursor: sqlite3.Cursor) -> Optional[tuple[int, str]]:
         """
-        Resolves a drug ID or drug name to (drug_id, drug_name).
+        Resolves a drug ID, brand name, generic name, or active ingredient to (drug_id, drug_name).
         """
         if isinstance(drug_identifier, int):
             cursor.execute("SELECT drug_id, name FROM drugs WHERE drug_id = ?;", (drug_identifier,))
@@ -35,10 +35,40 @@ class SafetyScreeningEngine:
             if row:
                 return row["drug_id"], row["name"]
         elif isinstance(drug_identifier, str):
-            cursor.execute("SELECT drug_id, name FROM drugs WHERE LOWER(name) = LOWER(?);", (drug_identifier.strip(),))
+            clean_str = drug_identifier.strip()
+            # 1. Exact name match
+            cursor.execute("SELECT drug_id, name FROM drugs WHERE LOWER(name) = LOWER(?);", (clean_str,))
             row = cursor.fetchone()
             if row:
                 return row["drug_id"], row["name"]
+
+            # 2. Exact generic name match
+            cursor.execute("SELECT drug_id, name FROM drugs WHERE LOWER(generic_name) = LOWER(?);", (clean_str,))
+            row = cursor.fetchone()
+            if row:
+                return row["drug_id"], row["name"]
+
+            # 3. Canonical active ingredient match via drug_ingredients
+            cursor.execute(
+                """
+                SELECT d.drug_id, d.name 
+                FROM drugs d 
+                JOIN drug_ingredients di ON d.drug_id = di.drug_id 
+                WHERE LOWER(di.canonical_name) = LOWER(?) 
+                LIMIT 1;
+                """,
+                (clean_str,)
+            )
+            row = cursor.fetchone()
+            if row:
+                return row["drug_id"], row["name"]
+
+            # 4. Prefix / like search match
+            cursor.execute("SELECT drug_id, name FROM drugs WHERE LOWER(name) LIKE ? LIMIT 1;", (clean_str.lower() + "%",))
+            row = cursor.fetchone()
+            if row:
+                return row["drug_id"], row["name"]
+
         return None
 
     def evaluate_age_trigger(self, trigger_value: str, patient_age: Optional[int]) -> bool:

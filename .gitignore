@@ -44,7 +44,10 @@ Thumbs.db
 .idea/
 .vscode/
 
-# Large dataset raw/intermediate files (>100MB GitHub limit)
+# Large dataset raw/intermediate files & backups (>100MB GitHub limit)
+data/raw/
+data/backup_pre_step3/
 data/processed/*.csv
-data/raw/*.csv
-data/raw/*.tsv
+data/processed/*.db
+*.db
+

@@ -1,0 +1,517 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Controlled, evidence-backed clinical indication mappings for canonical pharmaceutical ingredients in India.",
+    "evidence_sources": [
+      "National Formulary of India (NFI), 6th Edition (2021), Indian Pharmacopoeia Commission",
+      "Central Drugs Standard Control Organization (CDSCO) Approved Drug Formulations List",
+      "WHO Model List of Essential Medicines (23rd List, 2023)"
+    ],
+    "disclaimer": "Academic and clinical decision-support reference. Mappings reflect official regulatory and formulary indications."
+  },
+  "indications": [
+    {
+      "canonical_ingredient": "paracetamol",
+      "drug_class": "Analgesic and Antipyretic",
+      "conditions": [
+        {"name": "Fever", "indication_type": "Primary"},
+        {"name": "Pain", "indication_type": "Primary"},
+        {"name": "Osteoarthritis", "indication_type": "Secondary"},
+        {"name": "Headache", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Paracetamol",
+      "evidence_reference": "NFI 2021, Section 2.1: Non-opioid analgesics, antipyretics and NSAIDs"
+    },
+    {
+      "canonical_ingredient": "amoxicillin",
+      "drug_class": "Beta-Lactam Antibacterial (Penicillin)",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Sinusitis", "indication_type": "Primary"},
+        {"name": "Bronchitis", "indication_type": "Primary"},
+        {"name": "Pneumonia", "indication_type": "Primary"},
+        {"name": "Skin and Structure Infection", "indication_type": "Primary"},
+        {"name": "Urinary Tract Infection", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Amoxicillin",
+      "evidence_reference": "NFI 2021, Section 6.2.1: Beta-lactam medicines"
+    },
+    {
+      "canonical_ingredient": "clavulanic acid",
+      "drug_class": "Beta-Lactamase Inhibitor",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Sinusitis", "indication_type": "Primary"},
+        {"name": "Bronchitis", "indication_type": "Primary"},
+        {"name": "Pneumonia", "indication_type": "Primary"}
+      ],
+      "evidence_source": "CDSCO Approved Fixed Dose Combinations / NFI 2021",
+      "evidence_reference": "NFI 2021, Section 6.2.1: Amoxicillin + Clavulanic Acid"
+    },
+    {
+      "canonical_ingredient": "azithromycin",
+      "drug_class": "Macrolide Antibacterial",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Upper Respiratory Tract Infection", "indication_type": "Primary"},
+        {"name": "Bronchitis", "indication_type": "Primary"},
+        {"name": "Pneumonia", "indication_type": "Primary"},
+        {"name": "Sinusitis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Azithromycin",
+      "evidence_reference": "NFI 2021, Section 6.2.4: Macrolides"
+    },
+    {
+      "canonical_ingredient": "metformin",
+      "drug_class": "Biguanide Antidiabetic",
+      "conditions": [
+        {"name": "Type 2 Diabetes", "indication_type": "Primary"},
+        {"name": "Diabetes, Type 2", "indication_type": "Primary"},
+        {"name": "Polycystic Ovary Syndrome", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Metformin",
+      "evidence_reference": "NFI 2021, Section 18.5: Oral antidiabetic medicines"
+    },
+    {
+      "canonical_ingredient": "glimepiride",
+      "drug_class": "Sulfonylurea Antidiabetic",
+      "conditions": [
+        {"name": "Type 2 Diabetes", "indication_type": "Primary"},
+        {"name": "Diabetes, Type 2", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) / CDSCO Approved Formulations",
+      "evidence_reference": "NFI 2021, Section 18.5: Sulfonylureas"
+    },
+    {
+      "canonical_ingredient": "vildagliptin",
+      "drug_class": "DPP-4 Inhibitor Antidiabetic",
+      "conditions": [
+        {"name": "Type 2 Diabetes", "indication_type": "Primary"},
+        {"name": "Diabetes, Type 2", "indication_type": "Primary"}
+      ],
+      "evidence_source": "CDSCO Approved Formulations: Vildagliptin",
+      "evidence_reference": "CDSCO Gazette Approval / NFI 2021 Section 18.5"
+    },
+    {
+      "canonical_ingredient": "teneligliptin",
+      "drug_class": "DPP-4 Inhibitor Antidiabetic",
+      "conditions": [
+        {"name": "Type 2 Diabetes", "indication_type": "Primary"},
+        {"name": "Diabetes, Type 2", "indication_type": "Primary"}
+      ],
+      "evidence_source": "CDSCO Approved Formulations: Teneligliptin",
+      "evidence_reference": "CDSCO List of Approved New Drugs"
+    },
+    {
+      "canonical_ingredient": "dapagliflozin",
+      "drug_class": "SGLT2 Inhibitor Antidiabetic",
+      "conditions": [
+        {"name": "Type 2 Diabetes", "indication_type": "Primary"},
+        {"name": "Diabetes, Type 2", "indication_type": "Primary"},
+        {"name": "Heart Failure", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "CDSCO Approved New Drugs / NFI 2021",
+      "evidence_reference": "CDSCO Approved Indications: SGLT2 Inhibitors"
+    },
+    {
+      "canonical_ingredient": "telmisartan",
+      "drug_class": "Angiotensin II Receptor Blocker (ARB)",
+      "conditions": [
+        {"name": "Hypertension", "indication_type": "Primary"},
+        {"name": "High Blood Pressure", "indication_type": "Primary"},
+        {"name": "Cardiovascular Risk Reduction", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Telmisartan",
+      "evidence_reference": "NFI 2021, Section 12.3: Antihypertensive medicines"
+    },
+    {
+      "canonical_ingredient": "losartan",
+      "drug_class": "Angiotensin II Receptor Blocker (ARB)",
+      "conditions": [
+        {"name": "Hypertension", "indication_type": "Primary"},
+        {"name": "High Blood Pressure", "indication_type": "Primary"},
+        {"name": "Diabetic Nephropathy", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Losartan",
+      "evidence_reference": "NFI 2021, Section 12.3: ARBs"
+    },
+    {
+      "canonical_ingredient": "lisinopril",
+      "drug_class": "ACE Inhibitor",
+      "conditions": [
+        {"name": "Hypertension", "indication_type": "Primary"},
+        {"name": "High Blood Pressure", "indication_type": "Primary"},
+        {"name": "Heart Failure", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Lisinopril",
+      "evidence_reference": "NFI 2021, Section 12.3: ACE Inhibitors"
+    },
+    {
+      "canonical_ingredient": "ramipril",
+      "drug_class": "ACE Inhibitor",
+      "conditions": [
+        {"name": "Hypertension", "indication_type": "Primary"},
+        {"name": "High Blood Pressure", "indication_type": "Primary"},
+        {"name": "Heart Failure", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Ramipril",
+      "evidence_reference": "NFI 2021, Section 12.3: ACE Inhibitors"
+    },
+    {
+      "canonical_ingredient": "enalapril",
+      "drug_class": "ACE Inhibitor",
+      "conditions": [
+        {"name": "Hypertension", "indication_type": "Primary"},
+        {"name": "High Blood Pressure", "indication_type": "Primary"},
+        {"name": "Heart Failure", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Enalapril",
+      "evidence_reference": "NFI 2021, Section 12.3: ACE Inhibitors"
+    },
+    {
+      "canonical_ingredient": "amlodipine",
+      "drug_class": "Calcium Channel Blocker (Dihydropyridine)",
+      "conditions": [
+        {"name": "Hypertension", "indication_type": "Primary"},
+        {"name": "High Blood Pressure", "indication_type": "Primary"},
+        {"name": "Angina Pectoris", "indication_type": "Primary"},
+        {"name": "Coronary Artery Disease", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Amlodipine",
+      "evidence_reference": "NFI 2021, Section 12.3: Calcium channel blockers"
+    },
+    {
+      "canonical_ingredient": "hydrochlorothiazide",
+      "drug_class": "Thiazide Diuretic",
+      "conditions": [
+        {"name": "Hypertension", "indication_type": "Primary"},
+        {"name": "High Blood Pressure", "indication_type": "Primary"},
+        {"name": "Edema", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Hydrochlorothiazide",
+      "evidence_reference": "NFI 2021, Section 16.1: Diuretics"
+    },
+    {
+      "canonical_ingredient": "atorvastatin",
+      "drug_class": "HMG-CoA Reductase Inhibitor (Statin)",
+      "conditions": [
+        {"name": "High Cholesterol", "indication_type": "Primary"},
+        {"name": "Hyperlipidemia", "indication_type": "Primary"},
+        {"name": "Dyslipidemia", "indication_type": "Primary"},
+        {"name": "Prevention of Cardiovascular Disease", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Atorvastatin",
+      "evidence_reference": "NFI 2021, Section 12.6: Lipid-lowering medicines"
+    },
+    {
+      "canonical_ingredient": "rosuvastatin",
+      "drug_class": "HMG-CoA Reductase Inhibitor (Statin)",
+      "conditions": [
+        {"name": "High Cholesterol", "indication_type": "Primary"},
+        {"name": "Hyperlipidemia", "indication_type": "Primary"},
+        {"name": "Dyslipidemia", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Rosuvastatin",
+      "evidence_reference": "NFI 2021, Section 12.6: Statins"
+    },
+    {
+      "canonical_ingredient": "pantoprazole",
+      "drug_class": "Proton Pump Inhibitor (PPI)",
+      "conditions": [
+        {"name": "GERD", "indication_type": "Primary"},
+        {"name": "Gastroesophageal Reflux Disease", "indication_type": "Primary"},
+        {"name": "Peptic Ulcer", "indication_type": "Primary"},
+        {"name": "Gastritis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Pantoprazole",
+      "evidence_reference": "NFI 2021, Section 17.1: Antacids and other antiulcer medicines"
+    },
+    {
+      "canonical_ingredient": "rabeprazole",
+      "drug_class": "Proton Pump Inhibitor (PPI)",
+      "conditions": [
+        {"name": "GERD", "indication_type": "Primary"},
+        {"name": "Gastroesophageal Reflux Disease", "indication_type": "Primary"},
+        {"name": "Peptic Ulcer", "indication_type": "Primary"},
+        {"name": "Gastritis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Rabeprazole",
+      "evidence_reference": "NFI 2021, Section 17.1: Proton pump inhibitors"
+    },
+    {
+      "canonical_ingredient": "omeprazole",
+      "drug_class": "Proton Pump Inhibitor (PPI)",
+      "conditions": [
+        {"name": "GERD", "indication_type": "Primary"},
+        {"name": "Gastroesophageal Reflux Disease", "indication_type": "Primary"},
+        {"name": "Peptic Ulcer", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Omeprazole",
+      "evidence_reference": "NFI 2021, Section 17.1: Proton pump inhibitors"
+    },
+    {
+      "canonical_ingredient": "levocetirizine",
+      "drug_class": "Second-Generation Antihistamine",
+      "conditions": [
+        {"name": "Allergic Rhinitis", "indication_type": "Primary"},
+        {"name": "Allergies", "indication_type": "Primary"},
+        {"name": "Allergic Urticaria", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Levocetirizine",
+      "evidence_reference": "NFI 2021, Section 3.1: Antiallergics and medicines used in anaphylaxis"
+    },
+    {
+      "canonical_ingredient": "cetirizine",
+      "drug_class": "Second-Generation Antihistamine",
+      "conditions": [
+        {"name": "Allergic Rhinitis", "indication_type": "Primary"},
+        {"name": "Allergies", "indication_type": "Primary"},
+        {"name": "Allergic Urticaria", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Cetirizine",
+      "evidence_reference": "NFI 2021, Section 3.1: Antiallergics"
+    },
+    {
+      "canonical_ingredient": "montelukast",
+      "drug_class": "Leukotriene Receptor Antagonist",
+      "conditions": [
+        {"name": "Asthma", "indication_type": "Primary"},
+        {"name": "Allergic Rhinitis", "indication_type": "Primary"},
+        {"name": "Bronchospasm Prophylaxis", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Montelukast",
+      "evidence_reference": "NFI 2021, Section 25.1: Antiasthmatic medicines"
+    },
+    {
+      "canonical_ingredient": "aceclofenac",
+      "drug_class": "Nonsteroidal Anti-inflammatory Drug (NSAID)",
+      "conditions": [
+        {"name": "Pain", "indication_type": "Primary"},
+        {"name": "Osteoarthritis", "indication_type": "Primary"},
+        {"name": "Rheumatoid Arthritis", "indication_type": "Primary"},
+        {"name": "Ankylosing Spondylitis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Aceclofenac",
+      "evidence_reference": "NFI 2021, Section 2.1: NSAIDs"
+    },
+    {
+      "canonical_ingredient": "diclofenac",
+      "drug_class": "Nonsteroidal Anti-inflammatory Drug (NSAID)",
+      "conditions": [
+        {"name": "Pain", "indication_type": "Primary"},
+        {"name": "Osteoarthritis", "indication_type": "Primary"},
+        {"name": "Rheumatoid Arthritis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Diclofenac",
+      "evidence_reference": "NFI 2021, Section 2.1: NSAIDs"
+    },
+    {
+      "canonical_ingredient": "ibuprofen",
+      "drug_class": "Nonsteroidal Anti-inflammatory Drug (NSAID)",
+      "conditions": [
+        {"name": "Pain", "indication_type": "Primary"},
+        {"name": "Fever", "indication_type": "Primary"},
+        {"name": "Osteoarthritis", "indication_type": "Primary"},
+        {"name": "Headache", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Ibuprofen",
+      "evidence_reference": "NFI 2021, Section 2.1: NSAIDs"
+    },
+    {
+      "canonical_ingredient": "cefixime",
+      "drug_class": "Third-Generation Cephalosporin Antibacterial",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Urinary Tract Infection", "indication_type": "Primary"},
+        {"name": "Typhoid Fever", "indication_type": "Primary"},
+        {"name": "Sinusitis", "indication_type": "Primary"},
+        {"name": "Bronchitis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Cefixime",
+      "evidence_reference": "NFI 2021, Section 6.2.1: Cephalosporins"
+    },
+    {
+      "canonical_ingredient": "ceftriaxone",
+      "drug_class": "Third-Generation Cephalosporin Antibacterial",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Pneumonia", "indication_type": "Primary"},
+        {"name": "Meningitis", "indication_type": "Primary"},
+        {"name": "Urinary Tract Infection", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Ceftriaxone",
+      "evidence_reference": "NFI 2021, Section 6.2.1: Cephalosporins"
+    },
+    {
+      "canonical_ingredient": "cefpodoxime",
+      "drug_class": "Third-Generation Cephalosporin Antibacterial",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Upper Respiratory Tract Infection", "indication_type": "Primary"},
+        {"name": "Sinusitis", "indication_type": "Primary"},
+        {"name": "Skin and Structure Infection", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Cefpodoxime",
+      "evidence_reference": "NFI 2021, Section 6.2.1: Cephalosporins"
+    },
+    {
+      "canonical_ingredient": "cefuroxime",
+      "drug_class": "Second-Generation Cephalosporin Antibacterial",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Bronchitis", "indication_type": "Primary"},
+        {"name": "Sinusitis", "indication_type": "Primary"},
+        {"name": "Skin and Structure Infection", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Cefuroxime",
+      "evidence_reference": "NFI 2021, Section 6.2.1: Cephalosporins"
+    },
+    {
+      "canonical_ingredient": "ciprofloxacin",
+      "drug_class": "Fluoroquinolone Antibacterial",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Urinary Tract Infection", "indication_type": "Primary"},
+        {"name": "Infectious Diarrhea", "indication_type": "Primary"},
+        {"name": "Typhoid Fever", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Ciprofloxacin",
+      "evidence_reference": "NFI 2021, Section 6.2.2: Quinolones"
+    },
+    {
+      "canonical_ingredient": "ofloxacin",
+      "drug_class": "Fluoroquinolone Antibacterial",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Urinary Tract Infection", "indication_type": "Primary"},
+        {"name": "Infectious Diarrhea", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Ofloxacin",
+      "evidence_reference": "NFI 2021, Section 6.2.2: Quinolones"
+    },
+    {
+      "canonical_ingredient": "levofloxacin",
+      "drug_class": "Fluoroquinolone Antibacterial",
+      "conditions": [
+        {"name": "Bacterial Infection", "indication_type": "Primary"},
+        {"name": "Pneumonia", "indication_type": "Primary"},
+        {"name": "Sinusitis", "indication_type": "Primary"},
+        {"name": "Urinary Tract Infection", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Levofloxacin",
+      "evidence_reference": "NFI 2021, Section 6.2.2: Quinolones"
+    },
+    {
+      "canonical_ingredient": "aspirin",
+      "drug_class": "Antiplatelet / Salicylate NSAID",
+      "conditions": [
+        {"name": "Prevention of Cardiovascular Disease", "indication_type": "Primary"},
+        {"name": "Acute Coronary Syndrome", "indication_type": "Primary"},
+        {"name": "Pain", "indication_type": "Secondary"},
+        {"name": "Fever", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Acetylsalicylic Acid",
+      "evidence_reference": "NFI 2021, Section 12.5: Antithrombotic medicines"
+    },
+    {
+      "canonical_ingredient": "clopidogrel",
+      "drug_class": "Antiplatelet (P2Y12 Inhibitor)",
+      "conditions": [
+        {"name": "Acute Coronary Syndrome", "indication_type": "Primary"},
+        {"name": "Prevention of Cardiovascular Disease", "indication_type": "Primary"},
+        {"name": "Ischemic Stroke Prophylaxis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Clopidogrel",
+      "evidence_reference": "NFI 2021, Section 12.5: Antiplatelet agents"
+    },
+    {
+      "canonical_ingredient": "domperidone",
+      "drug_class": "Dopamine D2 Receptor Antagonist (Antiemetic/Prokinetic)",
+      "conditions": [
+        {"name": "Nausea / Vomiting", "indication_type": "Primary"},
+        {"name": "Dyspepsia", "indication_type": "Primary"},
+        {"name": "GERD", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Domperidone",
+      "evidence_reference": "NFI 2021, Section 17.2: Antiemetics and prokinetics"
+    },
+    {
+      "canonical_ingredient": "ondansetron",
+      "drug_class": "5-HT3 Receptor Antagonist (Antiemetic)",
+      "conditions": [
+        {"name": "Nausea / Vomiting", "indication_type": "Primary"},
+        {"name": "Chemotherapy Induced Nausea / Vomiting", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Ondansetron",
+      "evidence_reference": "NFI 2021, Section 17.2: Antiemetics"
+    },
+    {
+      "canonical_ingredient": "itraconazole",
+      "drug_class": "Triazole Antifungal",
+      "conditions": [
+        {"name": "Fungal Infection", "indication_type": "Primary"},
+        {"name": "Onychomycosis", "indication_type": "Primary"},
+        {"name": "Aspergillosis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Itraconazole",
+      "evidence_reference": "NFI 2021, Section 6.3: Antifungal medicines"
+    },
+    {
+      "canonical_ingredient": "fluconazole",
+      "drug_class": "Triazole Antifungal",
+      "conditions": [
+        {"name": "Fungal Infection", "indication_type": "Primary"},
+        {"name": "Candidiasis", "indication_type": "Primary"},
+        {"name": "Cryptococcal Meningitis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Fluconazole",
+      "evidence_reference": "NFI 2021, Section 6.3: Antifungals"
+    },
+    {
+      "canonical_ingredient": "pregabalin",
+      "drug_class": "GABA Analogue (Anticonvulsant / Neuropathic Pain Agent)",
+      "conditions": [
+        {"name": "Neuropathic Pain", "indication_type": "Primary"},
+        {"name": "Fibromyalgia", "indication_type": "Primary"},
+        {"name": "Generalized Anxiety Disorder", "indication_type": "Secondary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Pregabalin",
+      "evidence_reference": "NFI 2021, Section 2.2: Neuropathic pain medicines"
+    },
+    {
+      "canonical_ingredient": "etoricoxib",
+      "drug_class": "Selective COX-2 Inhibitor NSAID",
+      "conditions": [
+        {"name": "Pain", "indication_type": "Primary"},
+        {"name": "Osteoarthritis", "indication_type": "Primary"},
+        {"name": "Rheumatoid Arthritis", "indication_type": "Primary"},
+        {"name": "Ankylosing Spondylitis", "indication_type": "Primary"},
+        {"name": "Acute Gouty Arthritis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Etoricoxib",
+      "evidence_reference": "NFI 2021, Section 2.1: COX-2 selective inhibitors"
+    },
+    {
+      "canonical_ingredient": "levalbuterol",
+      "drug_class": "Short-Acting Beta-2 Agonist (Bronchodilator)",
+      "conditions": [
+        {"name": "Asthma", "indication_type": "Primary"},
+        {"name": "COPD", "indication_type": "Primary"},
+        {"name": "Bronchospasm Prophylaxis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Levosalbutamol",
+      "evidence_reference": "NFI 2021, Section 25.1: Bronchodilators"
+    },
+    {
+      "canonical_ingredient": "albuterol",
+      "drug_class": "Short-Acting Beta-2 Agonist (Bronchodilator)",
+      "conditions": [
+        {"name": "Asthma", "indication_type": "Primary"},
+        {"name": "COPD", "indication_type": "Primary"},
+        {"name": "Bronchospasm Prophylaxis", "indication_type": "Primary"}
+      ],
+      "evidence_source": "National Formulary of India (NFI 2021) Monograph: Salbutamol",
+      "evidence_reference": "NFI 2021, Section 25.1: Bronchodilators"
+    }
+  ]
+}

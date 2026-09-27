@@ -3,6 +3,7 @@ SQLite table schema definitions and entity constants.
 """
 
 TABLE_DRUGS = "drugs"
+TABLE_DRUG_INGREDIENTS = "drug_ingredients"
 TABLE_CONDITIONS = "conditions"
 TABLE_DRUG_CONDITIONS = "drug_conditions"
 TABLE_ALLERGY_CROSSWALK = "allergy_crosswalk"

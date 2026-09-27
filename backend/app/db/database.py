@@ -13,7 +13,13 @@ CREATE TABLE IF NOT EXISTS drugs (
     drug_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
     generic_name TEXT,
+    composition TEXT,
     drug_class TEXT NOT NULL DEFAULT 'Not specified',
+    manufacturer TEXT,
+    price_inr REAL DEFAULT 0.0,
+    dosage_form TEXT DEFAULT 'Not specified',
+    pack_size TEXT,
+    is_discontinued INTEGER DEFAULT 0,
     description TEXT,
     avg_rating REAL DEFAULT 0.0,
     total_reviews INTEGER DEFAULT 0,
@@ -24,6 +30,22 @@ CREATE TABLE IF NOT EXISTS drugs (
 CREATE INDEX IF NOT EXISTS idx_drugs_name ON drugs(name);
 CREATE INDEX IF NOT EXISTS idx_drugs_generic_name ON drugs(generic_name);
 CREATE INDEX IF NOT EXISTS idx_drugs_drug_class ON drugs(drug_class);
+CREATE INDEX IF NOT EXISTS idx_drugs_manufacturer ON drugs(manufacturer);
+
+-- Structured Active Ingredients per Drug (Supports Multi-salt FDCs)
+CREATE TABLE IF NOT EXISTS drug_ingredients (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    drug_id INTEGER NOT NULL,
+    active_ingredient TEXT NOT NULL,
+    strength_value REAL,
+    strength_unit TEXT,
+    canonical_name TEXT NOT NULL,
+    source TEXT NOT NULL,
+    FOREIGN KEY (drug_id) REFERENCES drugs(drug_id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_di_drug_id ON drug_ingredients(drug_id);
+CREATE INDEX IF NOT EXISTS idx_di_canonical_name ON drug_ingredients(canonical_name);
 
 CREATE TABLE IF NOT EXISTS conditions (
     condition_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,6 +61,8 @@ CREATE TABLE IF NOT EXISTS drug_conditions (
     condition_id INTEGER NOT NULL,
     review_count INTEGER DEFAULT 0,
     avg_rating REAL DEFAULT 0.0,
+    indication_type TEXT DEFAULT 'Primary',
+    evidence_source TEXT DEFAULT 'Clinical Literature',
     FOREIGN KEY (drug_id) REFERENCES drugs(drug_id) ON DELETE CASCADE,
     FOREIGN KEY (condition_id) REFERENCES conditions(condition_id) ON DELETE CASCADE,
     UNIQUE(drug_id, condition_id)
@@ -105,10 +129,56 @@ CREATE TABLE IF NOT EXISTS recommendation_audit_logs (
 """
 
 
+def _apply_schema_migrations(conn: sqlite3.Connection):
+    """
+    Applies non-destructive schema migrations for existing databases.
+    """
+    cursor = conn.cursor()
+    # Check existing columns in drugs table
+    cursor.execute("PRAGMA table_info(drugs);")
+    existing_drug_cols = {col[1] for col in cursor.fetchall()}
+
+    columns_to_add = [
+        ("composition", "TEXT"),
+        ("manufacturer", "TEXT"),
+        ("price_inr", "REAL DEFAULT 0.0"),
+        ("dosage_form", "TEXT DEFAULT 'Not specified'"),
+        ("pack_size", "TEXT"),
+        ("is_discontinued", "INTEGER DEFAULT 0"),
+    ]
+    for col_name, col_def in columns_to_add:
+        if col_name not in existing_drug_cols:
+            try:
+                cursor.execute(f"ALTER TABLE drugs ADD COLUMN {col_name} {col_def};")
+            except sqlite3.OperationalError:
+                pass
+
+    # Check existing columns in drug_conditions table
+    cursor.execute("PRAGMA table_info(drug_conditions);")
+    existing_dc_cols = {col[1] for col in cursor.fetchall()}
+    dc_cols_to_add = [
+        ("indication_type", "TEXT DEFAULT 'Primary'"),
+        ("evidence_source", "TEXT DEFAULT 'Clinical Literature'"),
+    ]
+    for col_name, col_def in dc_cols_to_add:
+        if col_name not in existing_dc_cols:
+            try:
+                cursor.execute(f"ALTER TABLE drug_conditions ADD COLUMN {col_name} {col_def};")
+            except sqlite3.OperationalError:
+                pass
+
+    try:
+        cursor.execute("CREATE INDEX IF NOT EXISTS idx_drugs_manufacturer ON drugs(manufacturer);")
+    except sqlite3.OperationalError:
+        pass
+
+    conn.commit()
+
+
 def init_db(db_path: Path | str | None = None) -> sqlite3.Connection:
     """
     Initializes SQLite database and creates tables if they do not exist.
-    Enforces foreign key constraints.
+    Enforces foreign key constraints and applies non-destructive migrations.
     """
     if db_path is None:
         db_path = settings.DATABASE_PATH
@@ -118,7 +188,9 @@ def init_db(db_path: Path | str | None = None) -> sqlite3.Connection:
 
     conn = sqlite3.connect(str(path))
     conn.execute("PRAGMA foreign_keys = ON;")
+    _apply_schema_migrations(conn)
     conn.executescript(SCHEMA_SQL)
+    _apply_schema_migrations(conn)
     conn.commit()
     return conn
 

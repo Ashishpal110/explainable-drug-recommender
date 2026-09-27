@@ -1,16 +1,16 @@
-# Explainable Personalized Drug Recommendation and Safety Screening System Using Machine Learning
+# Explainable Personalized Drug Recommendation and Safety Screening System
 
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB.svg?logo=python&logoColor=white)](https://www.python.org)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/Frontend-React_18_%2B_Vite-61DAFB.svg?logo=react&logoColor=black)](https://react.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind_CSS-38B2AC.svg?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-F7931E.svg?logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
 [![SQLite](https://img.shields.io/badge/Database-SQLite_3-003B57.svg?logo=sqlite&logoColor=white)](https://www.sqlite.org)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg?logo=python&logoColor=white)](https://www.python.org)
-[![Tests](https://img.shields.io/badge/Tests-38%2F38_Passing-brightgreen.svg)]()
+[![Tests](https://img.shields.io/badge/Tests-57%2F57_Passing-brightgreen.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-> **Academic B.Tech Final-Year Capstone Project**  
-> *A Clinical Decision-Support Prototype with Decoupled Deterministic Safety Auditing*  
+> **An academic clinical decision-support prototype combining machine-learning-based recommendation with deterministic safety screening across the Indian pharmaceutical catalog.**  
+> *Final-Year Capstone Engineering Project*  
 > **Author:** [Ashish Pal](https://github.com/Ashishpal110)
 
 ---
@@ -20,212 +20,110 @@
 > [!IMPORTANT]
 > **This system is an academic research and clinical decision-support prototype. It does NOT provide medical advice, diagnosis, or prescriptions.**  
 > The safety status `NO_KNOWN_CONFLICT` indicates only that **no matching allergy, drug-drug interaction (DDI), or contraindication rule was found in the local database**. It does **NOT** establish or prove clinical safety. All recommendations must be reviewed by a qualified healthcare professional.
+> **Data Provenance Notice:** Indian pharmaceutical catalog listings, clinical indication mappings (NFI 2021, CDSCO, clinical monographs), and patient review-derived sentiment evidence originate from distinct sources and are explicitly labeled by provenance.
 
 ---
 
 ## 1. Project Overview
 
-The **Explainable Personalized Drug Recommendation and Safety Screening System** addresses a critical limitation in healthcare AI: the black-box nature of statistical recommendation systems.
+In healthcare informatics, standard machine learning recommendation models often operate as "black boxes," ranking items based purely on review text sentiment or keyword similarity. In clinical pharmacotherapy, prioritizing a drug based on positive satisfaction is perilous if patient-specific contraindications, drug allergies, or severe drug-drug interactions (DDIs) are ignored.
 
-In real-world pharmacotherapy, suggesting medications solely based on review satisfaction ratings or keyword similarity is hazardous if patient-specific safety constraints (such as severe drug allergies, drug-drug interactions, or pediatric contraindications) are ignored.
-
-This system implements a **two-tier decoupled architecture**:
-1. **Multi-Factor Content-Based Recommendation Pipeline**: Discovers candidates based on indication match, TF-IDF profile similarity, model-inferred patient review satisfaction, and historical patient ratings.
-2. **Deterministic Safety Screening Engine**: An independent, deterministic rule-based safety layer that audits every candidate against structured SQLite knowledge base tables (allergy crosswalk, DDI rules, and contraindications) with verifiable clinical sources (FDA SPL / DailyMed).
+This project introduces a **decoupled two-tier architecture tailored for Indian pharmaceuticals**:
+1. **Tier 1 (Content-Based Recommendation Pipeline)**: Evaluates candidate drugs based on medical indication match ($0.40$), TF-IDF symptom profile similarity ($0.30$), NLP model-inferred patient review satisfaction ($0.20$), and historical patient ratings ($0.10$). When rating or sentiment evidence is unavailable for an Indian brand, weights are dynamically renormalized without synthetic priors.
+2. **Tier 2 (Deterministic Safety Screening Engine)**: An independent rule-based engine backed by relational SQLite tables (Allergy Crosswalk, Drug-Drug Interactions, and Age/Condition Contraindications) evaluated at the canonical active-ingredient level. High-severity conflicts immediately divert candidates to a filtered conflict view with transparent clinical rationales.
 
 ---
 
-## 2. Key Architectural Principles
+## 🖥️ Application Preview
 
-- **Strict Decoupling**: Recommendation factor scoring ($Match_{cond}$, $Sim_{content}$, $\bar{S}_{sentiment}$, $R_{rating}$) operates independently from safety evaluation. Safety compatibility is **NOT** a recommendation scoring factor.
-- **Safety Overrides Score**: If a candidate triggers a high/critical safety conflict (e.g., severe allergy or severe DDI), it is strictly diverted to `filtered_drugs` regardless of how high its recommendation score might be.
-- **Explainability by Design**: Every recommendation and every filtered exclusion includes transparent mathematical factor contributions and natural language justifications.
-- **Proxy Supervision**: NLP sentiment classification utilizes rating-derived proxy labels ($\ge 7$ Positive, $5\text{--}6$ Neutral, $\le 4$ Negative) and reflects patient-reported satisfaction rather than clinical trial efficacy.
-- **No Gender Dependence**: Patient profiles strictly contain age, condition, optional symptoms, allergies, and active medications.
+### Clinical Dashboard
+The primary intake dashboard allows inputting patient age, condition, reported symptoms, allergies, and active medications.
+![Dashboard](docs/screenshots/dashboard.png)
+
+### Personalized Drug Recommendations
+Approved candidates are displayed with multi-factor score meters, Indian pharmaceutical metadata (Brand, Composition, Manufacturer, INR pricing, Dosage Form, Pack Size), sentiment provenance callouts, and `NO_KNOWN_CONFLICT` safety badges.
+![Personalized Recommendation](docs/screenshots/recommendation.png)
+
+### Deterministic Safety Screening & Conflict Filtering
+Unsafe medications are automatically removed from the recommendation list and displayed with exact rule provenance, severity ratings, and clinical rationales.
+![Safety Screening](docs/screenshots/safety-screening.png)
+
+### Medication Catalog & Drug Explorer
+Search and inspect all 245,644 cataloged Indian formulations, active generic constituents, approved indications, and review metrics.
+![Drug Explorer](docs/screenshots/drug-explorer.png)
+
+### Detailed Medication Entity Inspection
+Comprehensive drawer detailing clinical indications, documented interactions, and deterministic contraindications.
+![Drug Details](docs/screenshots/drug-details.png)
+
+### Real-Time NLP Review Sentiment Analyzer
+Interactive classifier that evaluates raw patient review text, extracting polarity probability, confidence, and salient TF-IDF keywords.
+![Sentiment Analyzer](docs/screenshots/sentiment-analyzer.png)
+
+### Model Performance & Evaluation Metrics
+Live holdout test set performance dashboard showing confusion matrix and classification reports on 53,200 holdout reviews.
+![Model Metrics](docs/screenshots/model-metrics.png)
 
 ---
 
-## 3. Technology Stack
+## 2. System Architecture
 
-### Backend
-- **Framework**: FastAPI (Asynchronous REST API)
-- **Language**: Python 3.10+ (Tested on Python 3.14.6)
-- **Data Validation**: Pydantic v2
-- **Database**: SQLite 3 (with enforced `PRAGMA foreign_keys = ON;`)
-- **Data Science & ML**: pandas, NumPy, scikit-learn, joblib
-- **Testing**: pytest, httpx
+The architecture separates statistical ML scoring from deterministic safety verification:
 
-### Frontend
-- **Framework**: React 18 + Vite
-- **Routing**: React Router DOM
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **Visuals**: Recharts
+![System Architecture](docs/architecture.png)
 
----
+```mermaid
+flowchart TD
+    subgraph Client["Frontend Layer (React 18 + Vite)"]
+        UI_Form["Patient Profile Intake\n(Age, Condition, Symptoms, Allergies, Meds)"]
+        UI_Dash["Dashboard / Recommendation Views"]
+        UI_Exp["Drug Explorer & Details"]
+        UI_Sent["NLP Sentiment Analyzer"]
+        UI_Met["Model Metrics Dashboard"]
+    end
 
-## 4. System Architecture
+    subgraph API["Backend Layer (FastAPI)"]
+        Router["/api/v1 REST Endpoints"]
+        RecSvc["RecommendationService"]
+    end
 
-```text
-                                  [ Patient Profile Request ]
-                           (Age, Condition, Symptoms, Allergies, Meds)
-                                               │
-                        ┌──────────────────────┴──────────────────────┐
-                        ▼                                             ▼
-          [ Tier 1: Recommendation Pipeline ]           [ Tier 2: Deterministic Safety Layer ]
-          • Medical Indication Match (0.40)             • Allergy Crosswalk (30 rules)
-          • TF-IDF Profile Similarity (0.30)            • Drug-Drug Interactions (18 pairs)
-          • NLP Review Sentiment (0.20)                 • Age/Condition Contraindications
-          • Historical Patient Rating (0.10)            • Sourced from FDA SPL / DailyMed
-                        │                                             │
-                        └──────────────────────┬──────────────────────┘
-                                               ▼
-                                 [ Recommendation Service ]
-                           • Evaluates candidate safety status
-                           • NO_KNOWN_CONFLICT / WARNING       → recommended_drugs
-                           • FILTERED_SAFETY_CONFLICT          → filtered_drugs
-                                               │
-                                               ▼
-                                    [ Structured JSON API ]
-                                  + Factor Breakdowns & Disclaimer
-                                               │
-                                               ▼
-                                    [ React 18 Dashboard ]
+    subgraph Tier1["Tier 1: Recommendation Engine"]
+        Match["1. Indication Match (0.40)"]
+        Sim["2. TF-IDF Cosine Sim (0.30)"]
+        Sent["3. Review Sentiment (0.20)\n[Brand / Generic Provenance]"]
+        Rat["4. Historical Rating (0.10)\n[Dynamic Renormalization]"]
+    end
+
+    subgraph Tier2["Tier 2: Safety Screening Engine"]
+        Allergy["Allergy Crosswalk (Ingredient Level)"]
+        DDI["Drug-Drug Interactions (Canonical Salts)"]
+        Contra["Deterministic Contraindications"]
+    end
+
+    subgraph DB["Storage Layer (SQLite 3)"]
+        Tables[("drug_system.db\n• 245,644 Indian Drug Formulations\n• 2,101 Canonical Active Ingredients\n• 859 Indexed Medical Conditions\n• 556,380 Verified Indication Mappings\n• Ingredient-Level Safety Crosswalk")]
+    end
+
+    UI_Form --> Router
+    Router --> RecSvc
+    RecSvc --> Tier1
+    RecSvc --> Tier2
+    Tier1 --> Tables
+    Tier2 --> Tables
+    RecSvc --> UI_Dash
 ```
 
 ---
 
-## 5. Repository Structure
+## 3. Machine Learning Methodology & Results
 
-```text
-explainable-drug-recommender/
-│
-├── backend/
-│   ├── app/
-│   │   ├── api/
-│   │   │   ├── routes/
-│   │   │   │   ├── drugs.py           # Catalog routes (drugs, conditions, allergies)
-│   │   │   │   ├── health.py          # System status and readiness probe
-│   │   │   │   ├── metrics.py         # Empirical model evaluation metrics
-│   │   │   │   ├── recommend.py       # Recommendation and safety screening endpoint
-│   │   │   │   └── sentiment.py       # NLP review sentiment analysis endpoint
-│   │   │   └── __init__.py            # API router aggregator
-│   │   ├── core/
-│   │   │   └── config.py              # Application settings and directory paths
-│   │   ├── db/
-│   │   │   ├── database.py            # SQLite schema initialization and connection helpers
-│   │   │   └── models.py              # SQL schema definitions
-│   │   ├── ml/
-│   │   │   ├── preprocessing.py       # HTML entity decoding and text normalization
-│   │   │   ├── recommendation.py      # ContentRecommender scoring pipeline
-│   │   │   └── sentiment.py           # SentimentModel inference wrapper
-│   │   ├── safety/
-│   │   │   └── screening.py           # Deterministic SafetyScreeningEngine
-│   │   ├── schemas/
-│   │   │   ├── recommendation.py      # Pydantic request/response schemas
-│   │   │   └── sentiment.py           # Sentiment request/response schemas
-│   │   ├── services/
-│   │   │   ├── explanation_service.py # Natural language justification generator
-│   │   │   └── recommendation_service.py # Orchestrator combining recommendation & safety
-│   │   └── main.py                    # FastAPI application entrypoint
-│   ├── tests/                         # Pytest test suite (38 passing tests)
-│   ├── pytest.ini                     # Warning filter configurations
-│   ├── requirements.txt               # Backend Python dependencies
-│   └── .env.example                   # Backend environment template
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/                # Modular UI components
-│   │   │   ├── DisclaimerBanner.jsx   # Persistent decision support disclaimer
-│   │   │   ├── ErrorState.jsx         # Error handling with retry
-│   │   │   ├── ExplanationPanel.jsx   # Natural language explanation panel
-│   │   │   ├── FactorBreakdown.jsx    # 4-factor recommendation breakdown
-│   │   │   ├── FilteredDrugCard.jsx   # Excluded unsafe candidate card
-│   │   │   ├── LoadingState.jsx       # Animated clinical loading spinner
-│   │   │   ├── PatientProfileForm.jsx # Profile intake (age, condition, allergies, meds)
-│   │   │   ├── RecommendationCard.jsx # Approved candidate recommendation card
-│   │   │   ├── ReviewSummary.jsx      # Historical patient satisfaction summary
-│   │   │   └── SafetyBadge.jsx        # Strict safety status badge
-│   │   ├── pages/                     # Application views
-│   │   │   ├── Conditions.jsx         # Indexed medical conditions directory
-│   │   │   ├── Dashboard.jsx          # Main recommendation and safety dashboard
-│   │   │   ├── DrugDetails.jsx        # Drug profile and safety rule inspection
-│   │   │   ├── DrugExplorer.jsx       # Searchable, paginated medication catalog
-│   │   │   ├── ModelMetrics.jsx       # Holdout evaluation metrics and confusion matrix
-│   │   │   └── SentimentAnalyzer.jsx  # Interactive review text sentiment analyzer
-│   │   ├── services/
-│   │   │   └── api.js                 # Unified frontend API client
-│   │   ├── App.jsx                    # Application layout and React Router
-│   │   ├── index.css                  # Tailwind styles
-│   │   └── main.jsx                   # React entrypoint
-│   ├── package.json                   # Frontend npm configuration
-│   ├── tailwind.config.js             # Tailwind CSS configuration
-│   ├── vite.config.js                 # Vite build configuration
-│   └── .env.example                   # Frontend environment template
-│
-├── data/
-│   ├── processed/
-│   │   ├── drug_system.db             # Relational SQLite database (Layer 1 + Layer 2)
-│   │   ├── drugs_cleaned_train.csv    # Cleaned training corpus (159,498 rows)
-│   │   └── drugs_cleaned_test.csv     # Cleaned holdout test corpus (53,200 rows)
-│   └── safety/
-│       └── verified_safety_rules.json # Traceable safety rules with clinical source citations
-│
-├── models/
-│   ├── sentiment_vectorizer.joblib    # Serialized TF-IDF feature extractor (10,000 features)
-│   ├── sentiment_model.joblib         # Serialized Logistic Regression classifier
-│   ├── sentiment_metrics.json         # Empirical holdout test set evaluation results
-│   └── drug_sentiment_scores.joblib   # Aggregated S_sentiment for 3,654 medications
-│
-├── scripts/
-│   ├── e2e_http_integration_test.py   # E2E socket HTTP test suite
-│   └── phase9_comprehensive_evaluation.py # Comprehensive evaluation runner
-│
-├── docs/                              # Finalized architecture and project documentation
-│   ├── API_DESIGN.md
-│   ├── CAPSTONE_FINAL_REPORT.md       # Comprehensive academic final report
-│   ├── DATABASE_DESIGN.md
-│   ├── DATASET_PLAN.md
-│   ├── DEMO_GUIDE.md                  # Demonstration script and scenario walkthrough
-│   ├── FINAL_SUBMISSION_CHECKLIST.md  # Official submission verification checklist
-│   ├── PHASE_9_TESTING_EVALUATION_REPORT.md # Empirical evaluation report
-│   ├── PHASE_10_FINAL_RELEASE_REPORT.md    # Final release report
-│   ├── SYSTEM_ARCHITECTURE.md
-│   └── VIVA_PRESENTATION_GUIDE.md     # Presentation deck & viva defense Q&A
-│
-├── requirements.txt                   # Root Python dependencies
-├── .gitignore                         # Standard clean gitignore
-├── .env.example                       # Root environment template
-├── LICENSE                            # MIT License
-└── README.md
-```
+### NLP Sentiment Model Configuration
+- **Dataset**: Clinical Drug Review Corpus (159,498 training reviews, 53,200 holdout test reviews)
+- **Feature Extraction**: `TfidfVectorizer(ngram_range=(1, 2), max_features=35000, sublinear_tf=True, stop_words="english")`
+- **Classifier**: `LogisticRegression(C=1.0, solver="lbfgs", class_weight="balanced", max_iter=1000, random_state=42)`
+- **Supervision**: Rating-derived proxy supervision ($\ge 7$ Positive, $5\text{--}6$ Neutral, $\le 4$ Negative)
 
----
-
-## 6. Dataset & Preprocessing
-
-The primary dataset is derived from the **UCI / Drugs.com Drug Review Corpus** (215,063 raw records):
-- **Train Split (`drugs_cleaned_train.csv`)**: 159,498 rows
-- **Test Split (`drugs_cleaned_test.csv`)**: 53,200 rows
-
-### Preprocessing Pipeline:
-1. **HTML Entity Decoding**: Unescapes doubly-encoded entities (e.g., `&#039;` $\rightarrow$ `'`, `&amp;` $\rightarrow$ `&`).
-2. **Noise & Web Artifact Removal**: Strips residual HTML tags (`<br>`, `<span>`) and invalid community count artifacts.
-3. **Rating-Derived Proxy Labeling**:
-   - `Positive`: Rating $\ge 7/10$
-   - `Neutral`: Rating $5\text{--}6/10$
-   - `Negative`: Rating $\le 4/10$
-4. **Relational Database Population**: Creates 3,654 unique cataloged drugs, 836 valid conditions, and 8,586 drug-condition indication mappings in SQLite.
-
----
-
-## 7. Machine Learning Methodology & Empirical Results
-
-### Pipeline Configuration
-- **Text Vectorizer**: `TfidfVectorizer(ngram_range=(1, 2), max_features=10000, sublinear_tf=True, stop_words="english")`
-- **Classification Model**: `LogisticRegression(C=1.0, solver="lbfgs", class_weight="balanced", max_iter=1000, random_state=42)`
-- **Training Samples**: 159,498 patient reviews
-- **Holdout Test Samples**: 53,200 patient reviews
+![Model Performance](docs/model-performance.png)
 
 ### Empirical Holdout Evaluation (`models/sentiment_metrics.json`)
 
@@ -237,47 +135,40 @@ The primary dataset is derived from the **UCI / Drugs.com Drug Review Corpus** (
 | **Macro F1-Score** | **0.7090** | Unweighted harmonic mean of precision and recall |
 | **Weighted F1-Score** | **0.8182** | Support-weighted F1-Score reflecting class distribution |
 
-### Confusion Matrix (Test Split)
-```text
-                     Predicted Negative   Predicted Neutral   Predicted Positive
-Actual Negative :          10,639               1,788                 928
-Actual Neutral  :             878               3,143                 741
-Actual Positive :           2,398               3,786              28,899
-```
+---
+
+## 4. Recommendation & Safety Rules
+
+### Scoring Formula
+$$\text{Score}_{\text{raw}} = \frac{w_{\text{cond}} \cdot \text{Match}_{\text{cond}} + w_{\text{sim}} \cdot \text{Sim}_{\text{content}} + w_{\text{sent}} \cdot \bar{S}_{\text{sentiment}} + w_{\text{rat}} \cdot R_{\text{rating}}}{\sum w_{\text{available}}}$$
+
+- **Default weights**: $w_{\text{cond}}=0.40, w_{\text{sim}}=0.30, w_{\text{sent}}=0.20, w_{\text{rat}}=0.10$.
+- **Dynamic Renormalization**: If rating or sentiment is missing for an Indian formulation, the missing factor weight is omitted and the remaining weights are renormalized.
+- *Safety compatibility is strictly excluded from recommendation scoring factors.*
+
+### Supported Safety Statuses
+1. **`NO_KNOWN_CONFLICT`**: No matching rule found in local safety tables (never described as "SAFE").
+2. **`WARNING`**: Moderate interaction detected; candidate retained in recommendations with caution banner.
+3. **`FILTERED_SAFETY_CONFLICT`**: Severe allergy, high-severity DDI, or contraindication; candidate strictly moved to `filtered_drugs`.
 
 ---
 
-## 8. Recommendation & Safety Architecture
-
-### Recommendation Scoring Formula
-$$\text{Score}_{\text{raw}} = w_{\text{cond}} \cdot \text{Match}_{\text{cond}} + w_{\text{sim}} \cdot \text{Sim}_{\text{content}} + w_{\text{sent}} \cdot \bar{S}_{\text{sentiment}} + w_{\text{rat}} \cdot R_{\text{rating}}$$
-
-- **Configurable Default Weights**: $w_{\text{cond}} = 0.40, w_{\text{sim}} = 0.30, w_{\text{sent}} = 0.20, w_{\text{rat}} = 0.10$.
-- **Decoupled Safety Principle**: The recommendation pipeline evaluates indication match and user experience satisfaction. The independent safety layer audits candidate drugs against SQLite safety tables.
-
-### Safety Statuses Supported
-1. **`NO_KNOWN_CONFLICT`**: No matching rule was triggered in the local SQLite knowledge base.
-2. **`WARNING`**: Moderate interaction or precaution detected (candidate remains in recommendations with explicit warning banner).
-3. **`FILTERED_SAFETY_CONFLICT`**: Severe allergy, high-severity DDI, or absolute contraindication detected (candidate is strictly moved to `filtered_drugs`).
-
----
-
-## 9. API Specification
+## 5. API Specification
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `GET` | `/api/v1/health` | System health, database connection, and model loading status |
+| `GET` | `/api/v1/health` | System health status, database connection, and model loading state |
 | `POST` | `/api/v1/recommend` | Patient profile intake, recommendation scoring, and safety screening |
 | `POST` | `/api/v1/sentiment/analyze` | On-demand NLP review sentiment inference and salient keyword extraction |
-| `GET` | `/api/v1/conditions` | List of indexed medical conditions with mapped drug counts |
-| `GET` | `/api/v1/allergies` | Supported allergen and pharmacological classes in safety crosswalk |
-| `GET` | `/api/v1/drugs` | Paginated search of cataloged medications |
-| `GET` | `/api/v1/drugs/{drug_id}` | Detailed drug profile, indication list, and seeded safety rules |
+| `GET` | `/api/v1/conditions` | Catalog of 859 indexed medical conditions with mapped drug counts |
+| `GET` | `/api/v1/allergies` | Supported allergen and pharmacological classes |
+| `GET` | `/api/v1/drugs` | Paginated search of 245,644 cataloged Indian formulations |
+| `GET` | `/api/v1/drugs/{drug_id}` | Detailed drug profile, indications, and seeded safety rules |
 | `GET` | `/api/v1/model/metrics` | Live holdout test set evaluation metrics and pipeline specifications |
 
 ---
 
-## 10. Installation & Running Instructions
+## 6. Installation & Quick Start
 
 ### 1. Clone the Repository
 ```bash
@@ -285,7 +176,7 @@ git clone https://github.com/Ashishpal110/explainable-drug-recommender.git
 cd explainable-drug-recommender
 ```
 
-### 2. Backend Setup
+### 2. Backend Setup (Terminal 1)
 ```bash
 cd backend
 python -m pip install -r requirements.txt
@@ -294,7 +185,7 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 * **API Swagger Docs:** `http://127.0.0.1:8000/docs`
 * **Health Check:** `http://127.0.0.1:8000/api/v1/health`
 
-### 3. Frontend Setup (In a New Terminal)
+### 3. Frontend Setup (Terminal 2)
 ```bash
 cd frontend
 npm install
@@ -309,7 +200,7 @@ python -m pytest backend/tests/ -v
 
 ---
 
-## 11. Academic Capstone Documentation
+## 7. Academic Capstone Documentation
 
 - 📖 [Capstone Final Academic Report](docs/CAPSTONE_FINAL_REPORT.md)
 - 🎯 [Interactive Demonstration Script](docs/DEMO_GUIDE.md)
@@ -323,7 +214,7 @@ python -m pytest backend/tests/ -v
 
 ---
 
-## 12. License & Academic Credits
+## 8. License & Academic Credits
 
 - **Author:** [Ashish Pal](https://github.com/Ashishpal110)
 - **Degree:** Bachelor of Technology (B.Tech) in Artificial Intelligence and Machine Leaning. 

@@ -81,11 +81,18 @@ class RecommendationService:
                 filtered_expl = self.explanation_service.generate_filtered_explanation(
                     drug_name=candidate["drug_name"],
                     safety_audit=safety_audit,
+                    composition=candidate.get("composition"),
                 )
                 filtered_drugs.append(
                     FilteredDrug(
                         drug_id=candidate["drug_id"],
                         drug_name=candidate["drug_name"],
+                        brand_name=candidate.get("brand_name"),
+                        generic_name=candidate.get("generic_name"),
+                        composition=candidate.get("composition"),
+                        manufacturer=candidate.get("manufacturer"),
+                        dosage_form=candidate.get("dosage_form"),
+                        price_inr=candidate.get("price_inr"),
                         raw_recommendation_score=candidate["raw_score"],
                         factors=FactorScores(**candidate["factors"]),
                         safety_status="FILTERED_SAFETY_CONFLICT",
@@ -109,13 +116,24 @@ class RecommendationService:
                     review_summary=candidate["review_summary"],
                     safety_status=safety_status,
                     safety_details=safety_details.model_dump(),
+                    evidence_source=candidate.get("evidence_source"),
+                    generic_name=candidate.get("generic_name"),
+                    composition=candidate.get("composition"),
                 )
                 recommended_drugs.append(
                     RecommendedDrug(
                         drug_id=candidate["drug_id"],
                         drug_name=candidate["drug_name"],
+                        brand_name=candidate.get("brand_name"),
                         generic_name=candidate.get("generic_name"),
                         drug_class=candidate.get("drug_class") or "Not specified",
+                        composition=candidate.get("composition"),
+                        manufacturer=candidate.get("manufacturer"),
+                        dosage_form=candidate.get("dosage_form"),
+                        pack_size=candidate.get("pack_size"),
+                        price_inr=candidate.get("price_inr"),
+                        condition=candidate.get("condition"),
+                        evidence_source=candidate.get("evidence_source"),
                         final_score=candidate["raw_score"],
                         factors=FactorScores(**candidate["factors"]),
                         review_summary=ReviewSummary(
@@ -128,6 +146,7 @@ class RecommendationService:
                         explanation=rec_expl,
                     )
                 )
+
 
         # Sort recommendations and filtered drugs descending by score
         recommended_drugs.sort(key=lambda x: x.final_score, reverse=True)

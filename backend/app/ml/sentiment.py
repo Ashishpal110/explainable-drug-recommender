@@ -91,11 +91,87 @@ class SentimentModel:
             "top_keywords": top_keywords,
         }
 
-    def get_drug_sentiment(self, drug_name: str) -> float:
+    def get_drug_sentiment_info(self, drug_name: str, generic_name: Optional[str] = None) -> Dict[str, Any]:
         """
-        Returns the model-inferred mean positive probability S_sentiment(d)
-        aggregated across all reviews associated with the drug.
+        Returns structured sentiment metadata with explicit provenance:
+          - sentiment_score: Optional[float] (None if unreviewed)
+          - sentiment_data_available: bool (False if unreviewed)
+          - sentiment_evidence_level: 'brand_review' | 'active_ingredient_review' | 'no_review_evidence'
+          - sentiment_evidence_source: Optional[str]
+          - matched_entity: Optional[str]
         """
         if not drug_name:
-            return 0.50
-        return float(self.drug_sentiment_scores.get(drug_name, 0.50))
+            return {
+                "sentiment_score": None,
+                "sentiment_data_available": False,
+                "sentiment_evidence_level": "no_review_evidence",
+                "sentiment_evidence_source": None,
+                "matched_entity": None,
+            }
+
+        # 1. Direct key lookup (Brand-specific)
+        if drug_name in self.drug_sentiment_scores:
+            return {
+                "sentiment_score": round(float(self.drug_sentiment_scores[drug_name]), 4),
+                "sentiment_data_available": True,
+                "sentiment_evidence_level": "brand_review",
+                "sentiment_evidence_source": "Brand-specific review corpus",
+                "matched_entity": drug_name,
+            }
+
+        # 2. Case-insensitive match on trade name (Brand-specific)
+        drug_name_lower = drug_name.strip().lower()
+        for k, v in self.drug_sentiment_scores.items():
+            if k.lower() == drug_name_lower:
+                return {
+                    "sentiment_score": round(float(v), 4),
+                    "sentiment_data_available": True,
+                    "sentiment_evidence_level": "brand_review",
+                    "sentiment_evidence_source": "Brand-specific review corpus",
+                    "matched_entity": k,
+                }
+
+        # 3. Canonical generic active ingredient lookup (including cross-pharmacopoeia synonyms)
+        if generic_name:
+            SYNONYMS = {
+                "paracetamol": ["acetaminophen"],
+                "acetaminophen": ["paracetamol"],
+                "salbutamol": ["albuterol"],
+                "albuterol": ["salbutamol"],
+                "amoxycillin": ["amoxicillin"],
+                "amoxicillin": ["amoxycillin"],
+                "levosalbutamol": ["levalbuterol"],
+                "levalbuterol": ["levosalbutamol"],
+            }
+            for part in generic_name.split("+"):
+                part_clean = part.strip().lower()
+                candidates_to_try = [part_clean] + SYNONYMS.get(part_clean, [])
+                for target in candidates_to_try:
+                    for k, v in self.drug_sentiment_scores.items():
+                        if k.lower() == target:
+                            return {
+                                "sentiment_score": round(float(v), 4),
+                                "sentiment_data_available": True,
+                                "sentiment_evidence_level": "active_ingredient_review",
+                                "sentiment_evidence_source": f"Clinical drug-review corpus (active ingredient: {target})",
+                                "matched_entity": target,
+                            }
+
+        return {
+            "sentiment_score": None,
+            "sentiment_data_available": False,
+            "sentiment_evidence_level": "no_review_evidence",
+            "sentiment_evidence_source": None,
+            "matched_entity": None,
+        }
+
+    def get_drug_sentiment(self, drug_name: str, generic_name: Optional[str] = None) -> Optional[float]:
+        """
+        Returns the model-inferred mean positive probability S_sentiment(d)
+        aggregated across all verified reviews associated with the drug or its active generic salt.
+        Returns None if no empirical patient review evidence exists (no synthetic priors assigned).
+        """
+        info = self.get_drug_sentiment_info(drug_name, generic_name)
+        return info["sentiment_score"]
+
+

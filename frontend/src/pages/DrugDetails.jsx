@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Pill, ArrowLeft, ShieldAlert, AlertTriangle, Activity, Star, ThumbsUp, MessageSquare } from 'lucide-react';
+import { Pill, ArrowLeft, ShieldAlert, AlertTriangle, Activity, Star, ThumbsUp, MessageSquare, Info, Building2, Package, FileText } from 'lucide-react';
 import DisclaimerBanner from '../components/DisclaimerBanner';
 import LoadingState from '../components/LoadingState';
 import ErrorState from '../components/ErrorState';
@@ -30,6 +30,8 @@ export default function DrugDetails() {
     }
   }, [drugId]);
 
+  const hasReviews = drug && drug.total_reviews > 0;
+
   return (
     <div className="space-y-6">
       <DisclaimerBanner />
@@ -53,7 +55,7 @@ export default function DrugDetails() {
           <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
               <div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 flex-wrap">
                   <h2 className="text-2xl font-black text-slate-900">{drug.name}</h2>
                   <span className="px-2.5 py-1 bg-indigo-50 border border-indigo-200 text-indigo-800 text-xs font-semibold rounded-md">
                     {drug.drug_class || 'Class Unspecified'}
@@ -61,41 +63,50 @@ export default function DrugDetails() {
                 </div>
                 {drug.generic_name && (
                   <p className="text-xs text-slate-500 font-mono italic mt-1">
-                    Generic: {drug.generic_name}
+                    Canonical Active Generic: <strong className="text-slate-700 not-italic">{drug.generic_name}</strong>
                   </p>
                 )}
               </div>
 
-              {/* Aggregated Satisfaction Metrics */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-lg text-amber-800">
-                  <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
-                  <div>
-                    <div className="text-xs text-slate-400 uppercase font-semibold">Rating</div>
-                    <div className="text-sm font-bold">{drug.avg_rating ? `${drug.avg_rating.toFixed(1)}/10` : '—'}</div>
-                  </div>
-                </div>
+              {/* Review Evidence Statistics */}
+              <div className="flex items-center gap-3 flex-wrap">
+                {hasReviews ? (
+                  <>
+                    <div className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-lg text-amber-800">
+                      <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Avg Rating</div>
+                        <div className="text-sm font-bold">{drug.avg_rating ? `${drug.avg_rating.toFixed(1)}/10` : '—'}</div>
+                      </div>
+                    </div>
 
-                <div className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg text-emerald-800">
-                  <ThumbsUp className="w-4 h-4 text-emerald-600" />
-                  <div>
-                    <div className="text-xs text-slate-400 uppercase font-semibold">Positive</div>
-                    <div className="text-sm font-bold">{Math.round(drug.positive_sentiment_ratio * 100)}%</div>
-                  </div>
-                </div>
+                    <div className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg text-emerald-800">
+                      <ThumbsUp className="w-4 h-4 text-emerald-600" />
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Positive</div>
+                        <div className="text-sm font-bold">{Math.round(drug.positive_sentiment_ratio * 100)}%</div>
+                      </div>
+                    </div>
 
-                <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg text-slate-700">
-                  <MessageSquare className="w-4 h-4 text-slate-500" />
-                  <div>
-                    <div className="text-xs text-slate-400 uppercase font-semibold">Reviews</div>
-                    <div className="text-sm font-bold">{drug.total_reviews.toLocaleString()}</div>
+                    <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg text-slate-700">
+                      <MessageSquare className="w-4 h-4 text-slate-500" />
+                      <div>
+                        <div className="text-[10px] text-slate-400 uppercase font-semibold">Reviews</div>
+                        <div className="text-sm font-bold">{drug.total_reviews.toLocaleString()}</div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-500 flex items-center gap-2">
+                    <Info className="w-4 h-4 text-slate-400" />
+                    <span>No brand-specific reviews recorded in corpus. Sentiment may be derived at generic level during recommendations.</span>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed">
-              {drug.description}
+              {drug.description || 'Clinical profile and pharmacological description cataloged from standard pharmacopoeial monographs.'}
             </p>
           </div>
 
@@ -106,7 +117,7 @@ export default function DrugDetails() {
               <span>Cataloged Indication Mappings ({drug.indicated_conditions?.length || 0})</span>
             </h3>
 
-            {drug.indicated_conditions?.length === 0 ? (
+            {(!drug.indicated_conditions || drug.indicated_conditions.length === 0) ? (
               <p className="text-xs text-slate-400">No condition indications mapped in corpus.</p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -117,11 +128,17 @@ export default function DrugDetails() {
                   >
                     <div>
                       <div className="text-xs font-bold text-slate-800">{c.condition_name}</div>
-                      <div className="text-[11px] text-slate-500">{c.review_count} patient reviews</div>
+                      <div className="text-[11px] text-slate-500">{c.review_count > 0 ? `${c.review_count} patient reviews` : 'Indication mapped via formulary'}</div>
                     </div>
-                    <div className="text-xs font-semibold text-amber-700">
-                      {c.avg_rating ? `${c.avg_rating.toFixed(1)}/10` : '—'}
-                    </div>
+                    {c.avg_rating && c.avg_rating > 0 ? (
+                      <div className="text-xs font-semibold text-amber-700">
+                        {c.avg_rating.toFixed(1)}/10
+                      </div>
+                    ) : (
+                      <div className="text-xs font-medium text-slate-400">
+                        —
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -142,7 +159,7 @@ export default function DrugDetails() {
                   <h4 className="text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
                     Recognized Allergen Crosswalk Classes:
                   </h4>
-                  {drug.allergy_classes?.length === 0 ? (
+                  {(!drug.allergy_classes || drug.allergy_classes.length === 0) ? (
                     <p className="text-xs text-slate-500 italic">No allergen class crosswalk rules registered.</p>
                   ) : (
                     <div className="flex flex-wrap gap-1.5">
@@ -163,7 +180,7 @@ export default function DrugDetails() {
                     Direct Seeded DDI Rules:
                   </h4>
                   <p className="text-xs text-slate-600">
-                    {drug.interaction_count} distinct drug interaction pair rule(s) stored in SQLite knowledge base.
+                    {drug.interaction_count || 0} distinct drug interaction pair rule(s) stored in SQLite knowledge base.
                   </p>
                 </div>
               </div>
@@ -176,7 +193,7 @@ export default function DrugDetails() {
                 <span>Deterministic Contraindications</span>
               </h3>
 
-              {drug.contraindications?.length === 0 ? (
+              {(!drug.contraindications || drug.contraindications.length === 0) ? (
                 <p className="text-xs text-slate-500 italic">No explicit contraindication rules registered.</p>
               ) : (
                 <div className="space-y-2.5">
@@ -206,3 +223,4 @@ export default function DrugDetails() {
     </div>
   );
 }
+

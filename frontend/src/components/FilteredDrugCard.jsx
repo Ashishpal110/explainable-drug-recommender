@@ -15,6 +15,7 @@ export default function FilteredDrugCard({ drug }) {
   const {
     drug_id,
     drug_name,
+    generic_name,
     raw_recommendation_score = 0,
     factors = {},
     safety_status = 'FILTERED_SAFETY_CONFLICT',
@@ -36,6 +37,11 @@ export default function FilteredDrugCard({ drug }) {
             <span className="text-lg font-bold text-slate-900 line-through decoration-rose-500 decoration-2">
               {drug_name}
             </span>
+            {generic_name && (
+              <span className="text-xs text-slate-500 font-mono italic">
+                ({generic_name})
+              </span>
+            )}
             <SafetyBadge status={safety_status} />
             <span className="px-2 py-0.5 text-xs font-bold uppercase rounded bg-rose-600 text-white tracking-wider">
               {severity} SEVERITY

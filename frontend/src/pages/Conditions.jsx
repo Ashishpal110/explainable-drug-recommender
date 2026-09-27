@@ -41,10 +41,10 @@ export default function Conditions() {
           <div>
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
               <Activity className="w-5 h-5 text-indigo-600" />
-              <span>Medical Conditions Index</span>
+              <span>Evidence-Backed Medical Conditions Index</span>
             </h2>
             <p className="text-xs text-slate-500 mt-1">
-              Indexed medical indications cataloged from the Drugs.com review corpus.
+              Medical conditions and clinical indications mapped to canonical active ingredients with evidence from the National Formulary of India (NFI), CDSCO, and clinical monographs.
             </p>
           </div>
 

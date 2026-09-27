@@ -99,7 +99,7 @@ export default function Dashboard() {
 
       {/* LOADING STATE */}
       {requestState === STATES.LOADING && (
-        <LoadingState message="Retrieving indication matches, calculating profile similarity & patient review sentiment, and executing deterministic safety audits against allergies and DDIs..." />
+        <LoadingState message="Querying Indian pharmaceutical catalog, matching verified clinical indications, calculating TF-IDF symptom similarity & review sentiment, and screening deterministic safety rules..." />
       )}
 
       {/* ERROR STATE */}
@@ -180,7 +180,7 @@ export default function Dashboard() {
                 <p className="text-xs text-slate-500 max-w-md mx-auto">
                   {filteredList.length > 0
                     ? `${filteredList.length} candidate(s) were identified for ${patientSummary?.condition}, but all were excluded according to safety screening rules (see filtered conflicts below).`
-                    : `No cataloged medications were found mapped to "${patientSummary?.condition}" in the review database.`}
+                    : `No Indian pharmaceutical medications were found mapped to "${patientSummary?.condition}" with verified evidence.`}
                 </p>
               </div>
             ) : (

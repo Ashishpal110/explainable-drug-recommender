@@ -37,11 +37,14 @@ export default function ModelMetrics() {
         <div className="border-b border-slate-100 pb-4">
           <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
             <BarChart3 className="w-5 h-5 text-indigo-600" />
-            <span>Empirical Model Evaluation & Architecture Specifications</span>
+            <span>Review Sentiment Classification — Holdout Evaluation</span>
           </h2>
           <p className="text-xs text-slate-500 mt-1">
-            Empirical offline evaluation metrics on the holdout test set (53,200 reviews) and system architecture specifications.
+            Empirical offline evaluation metrics for the NLP review sentiment classifier on the holdout test set (53,200 reviews).
           </p>
+          <div className="mt-2.5 p-2.5 bg-indigo-50/60 border border-indigo-200 rounded-lg text-xs text-indigo-900 leading-relaxed">
+            <strong>Architecture Clarification:</strong> These metrics evaluate the accuracy of NLP sentiment polarity extraction from unstructured patient reviews. The recommendation engine integrates this sentiment signal with clinical condition matching, TF-IDF symptom profile similarity, and deterministic safety constraint screening across the 245,644-entry Indian pharmaceutical catalog.
+          </div>
         </div>
 
         {loading && <LoadingState message="Loading empirical model metrics from evaluation report..." />}
@@ -59,7 +62,7 @@ export default function ModelMetrics() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-xl">
                 <div className="text-xs font-semibold uppercase tracking-wider text-indigo-700">
-                  Overall Accuracy
+                  Sentiment Accuracy
                 </div>
                 <div className="text-2xl font-black text-indigo-900 mt-1">
                   {(sentimentData.accuracy * 100).toFixed(2)}%

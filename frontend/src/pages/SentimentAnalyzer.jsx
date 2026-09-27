@@ -81,6 +81,9 @@ export default function SentimentAnalyzer() {
           <p className="text-xs text-slate-500 mt-1">
             Evaluates unstructured patient review text using the offline-trained TF-IDF + Logistic Regression model with rating-derived proxy supervision.
           </p>
+          <div className="mt-2.5 p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-600 leading-relaxed">
+            <strong>Model Provenance Note:</strong> This NLP sentiment model was trained and evaluated on the project's clinical drug-review corpus. Its classification output reflects general patient satisfaction probability and should not be interpreted as Indian patient sentiment unless the evaluated text originates specifically from Indian clinical contexts.
+          </div>
         </div>
 
         {/* Quick Samples */}

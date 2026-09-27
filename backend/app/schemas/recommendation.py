@@ -25,14 +25,20 @@ class PatientProfileRequest(BaseModel):
 class FactorScores(BaseModel):
     condition_match: float = Field(..., ge=0.0, le=1.0)
     similarity_score: float = Field(..., ge=0.0, le=1.0)
-    sentiment_score: float = Field(..., ge=0.0, le=1.0)
-    rating_score: float = Field(..., ge=0.0, le=1.0)
+    sentiment_score: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    sentiment_data_available: bool = Field(default=False)
+    sentiment_evidence_level: str = Field(default="no_review_evidence")
+    sentiment_evidence_source: Optional[str] = None
+    brand_review_data_available: bool = Field(default=False)
+    rating_score: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    rating_data_available: bool = Field(default=False)
 
 
 class ReviewSummary(BaseModel):
-    positive_ratio: float = Field(..., ge=0.0, le=1.0)
-    total_reviews: int = Field(..., ge=0)
-    average_rating: float = Field(..., ge=0.0, le=10.0)
+    positive_ratio: Optional[float] = Field(default=None, ge=0.0, le=1.0)
+    total_reviews: int = Field(default=0, ge=0)
+    average_rating: Optional[float] = Field(default=None, ge=0.0, le=10.0)
+
 
 
 class SafetyDetails(BaseModel):
@@ -44,8 +50,16 @@ class SafetyDetails(BaseModel):
 class RecommendedDrug(BaseModel):
     drug_id: int
     drug_name: str
+    brand_name: Optional[str] = None
     generic_name: Optional[str] = None
-    drug_class: str
+    drug_class: str = "Not specified"
+    composition: Optional[str] = None
+    manufacturer: Optional[str] = None
+    dosage_form: Optional[str] = None
+    pack_size: Optional[str] = None
+    price_inr: Optional[float] = None
+    condition: Optional[str] = None
+    evidence_source: Optional[str] = None
     final_score: float
     factors: FactorScores
     review_summary: ReviewSummary
@@ -57,6 +71,12 @@ class RecommendedDrug(BaseModel):
 class FilteredDrug(BaseModel):
     drug_id: int
     drug_name: str
+    brand_name: Optional[str] = None
+    generic_name: Optional[str] = None
+    composition: Optional[str] = None
+    manufacturer: Optional[str] = None
+    dosage_form: Optional[str] = None
+    price_inr: Optional[float] = None
     raw_recommendation_score: float
     factors: FactorScores
     safety_status: str  # FILTERED_SAFETY_CONFLICT
@@ -73,3 +93,4 @@ class RecommendationResponse(BaseModel):
     recommended_drugs: List[RecommendedDrug]
     filtered_drugs: List[FilteredDrug]
     disclaimer: str
+
