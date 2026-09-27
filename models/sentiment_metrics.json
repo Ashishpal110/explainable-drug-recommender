@@ -1,0 +1,75 @@
+{
+  "model_evaluated": true,
+  "sentiment_model": {
+    "model_name": "TF-IDF + Logistic Regression",
+    "classifier": "LogisticRegression(C=1.0, solver='lbfgs', class_weight='balanced')",
+    "vectorizer": "TfidfVectorizer(ngram_range=(1, 2), max_features=35000, sublinear_tf=True)",
+    "supervision_method": "Rating-derived proxy labels (Positive >= 7, Neutral 5-6, Negative <= 4)",
+    "evaluation_dataset_split": "Drugs.com Holdout Test Split (drugs_cleaned_test.csv)",
+    "test_samples": 53200,
+    "train_samples": 159498,
+    "accuracy": 0.8023,
+    "precision_macro": 0.6902,
+    "recall_macro": 0.7601,
+    "f1_macro": 0.709,
+    "precision_weighted": 0.8477,
+    "recall_weighted": 0.8023,
+    "f1_weighted": 0.8182,
+    "classes": [
+      "Negative",
+      "Neutral",
+      "Positive"
+    ],
+    "confusion_matrix": {
+      "labels": [
+        "Negative",
+        "Neutral",
+        "Positive"
+      ],
+      "matrix": [
+        [
+          10639,
+          1788,
+          928
+        ],
+        [
+          878,
+          3143,
+          741
+        ],
+        [
+          2398,
+          3786,
+          28899
+        ]
+      ]
+    },
+    "per_class_metrics": {
+      "Negative": {
+        "precision": 0.7646,
+        "recall": 0.7966,
+        "f1-score": 0.7803,
+        "support": 13355
+      },
+      "Neutral": {
+        "precision": 0.3606,
+        "recall": 0.66,
+        "f1-score": 0.4664,
+        "support": 4762
+      },
+      "Positive": {
+        "precision": 0.9454,
+        "recall": 0.8237,
+        "f1-score": 0.8804,
+        "support": 35083
+      }
+    },
+    "training_time_seconds": 22.19,
+    "vectorization_time_seconds": 25.63,
+    "evaluation_time_seconds": 6.25
+  },
+  "recommendation_engine": {
+    "algorithm": "Content-Based Cosine Similarity + Review Sentiment Weighting",
+    "feature_representation": "TF-IDF Vector Space (Condition, Profile, Review Aspects)"
+  }
+}

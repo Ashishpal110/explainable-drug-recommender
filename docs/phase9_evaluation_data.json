@@ -1,0 +1,555 @@
+{
+  "database": {
+    "integrity": "ok",
+    "foreign_key_violations": 0,
+    "table_counts": {
+      "drugs": 3654,
+      "conditions": 836,
+      "drug_conditions": 8586,
+      "allergy_crosswalk": 30,
+      "drug_interactions": 18,
+      "contraindications": 16
+    },
+    "invalid_ddi_order_count": 0,
+    "duplicate_ddi_pairs": 0,
+    "orphan_allergies": 0,
+    "orphan_ddis": 0,
+    "orphan_contraindications": 0
+  },
+  "data_quality": {
+    "train": {
+      "name": "train",
+      "rows": 159498,
+      "columns": [
+        "uniqueID",
+        "drugName",
+        "condition",
+        "review",
+        "rating",
+        "date",
+        "usefulCount",
+        "review_raw",
+        "sentiment_label",
+        "sentiment_int"
+      ],
+      "null_counts": {
+        "uniqueID": 0,
+        "drugName": 0,
+        "condition": 0,
+        "review": 0,
+        "rating": 0,
+        "date": 0,
+        "usefulCount": 0,
+        "review_raw": 0,
+        "sentiment_label": 0,
+        "sentiment_int": 0
+      },
+      "invalid_ratings": 0,
+      "empty_reviews": 0,
+      "mismatched_sentiment_labels": 0,
+      "sentiment_distribution": {
+        "Positive": 105749,
+        "Negative": 39588,
+        "Neutral": 14161
+      }
+    },
+    "test": {
+      "name": "test",
+      "rows": 53200,
+      "columns": [
+        "uniqueID",
+        "drugName",
+        "condition",
+        "review",
+        "rating",
+        "date",
+        "usefulCount",
+        "review_raw",
+        "sentiment_label",
+        "sentiment_int"
+      ],
+      "null_counts": {
+        "uniqueID": 0,
+        "drugName": 0,
+        "condition": 0,
+        "review": 0,
+        "rating": 0,
+        "date": 0,
+        "usefulCount": 0,
+        "review_raw": 0,
+        "sentiment_label": 0,
+        "sentiment_int": 0
+      },
+      "invalid_ratings": 0,
+      "empty_reviews": 0,
+      "mismatched_sentiment_labels": 0,
+      "sentiment_distribution": {
+        "Positive": 35083,
+        "Negative": 13355,
+        "Neutral": 4762
+      }
+    },
+    "total_rows": 212698
+  },
+  "sentiment_evaluation": {
+    "computed": {
+      "accuracy": 0.8023,
+      "precision_macro": 0.6902,
+      "recall_macro": 0.7601,
+      "f1_macro": 0.709,
+      "f1_weighted": 0.8182,
+      "per_class": {
+        "Negative": {
+          "precision": 0.7646,
+          "recall": 0.7966,
+          "f1": 0.7803,
+          "support": 13355.0
+        },
+        "Neutral": {
+          "precision": 0.3606,
+          "recall": 0.66,
+          "f1": 0.4664,
+          "support": 4762.0
+        },
+        "Positive": {
+          "precision": 0.9454,
+          "recall": 0.8237,
+          "f1": 0.8804,
+          "support": 35083.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          10639,
+          1788,
+          928
+        ],
+        [
+          878,
+          3143,
+          741
+        ],
+        [
+          2398,
+          3786,
+          28899
+        ]
+      ]
+    },
+    "stored": {
+      "model_evaluated": true,
+      "sentiment_model": {
+        "model_name": "TF-IDF + Logistic Regression",
+        "classifier": "LogisticRegression(C=1.0, solver='lbfgs', class_weight='balanced')",
+        "vectorizer": "TfidfVectorizer(ngram_range=(1, 2), max_features=35000, sublinear_tf=True)",
+        "supervision_method": "Rating-derived proxy labels (Positive >= 7, Neutral 5-6, Negative <= 4)",
+        "evaluation_dataset_split": "Drugs.com Holdout Test Split (drugs_cleaned_test.csv)",
+        "test_samples": 53200,
+        "train_samples": 159498,
+        "accuracy": 0.8023,
+        "precision_macro": 0.6902,
+        "recall_macro": 0.7601,
+        "f1_macro": 0.709,
+        "precision_weighted": 0.8477,
+        "recall_weighted": 0.8023,
+        "f1_weighted": 0.8182,
+        "classes": [
+          "Negative",
+          "Neutral",
+          "Positive"
+        ],
+        "confusion_matrix": {
+          "labels": [
+            "Negative",
+            "Neutral",
+            "Positive"
+          ],
+          "matrix": [
+            [
+              10639,
+              1788,
+              928
+            ],
+            [
+              878,
+              3143,
+              741
+            ],
+            [
+              2398,
+              3786,
+              28899
+            ]
+          ]
+        },
+        "per_class_metrics": {
+          "Negative": {
+            "precision": 0.7646,
+            "recall": 0.7966,
+            "f1-score": 0.7803,
+            "support": 13355
+          },
+          "Neutral": {
+            "precision": 0.3606,
+            "recall": 0.66,
+            "f1-score": 0.4664,
+            "support": 4762
+          },
+          "Positive": {
+            "precision": 0.9454,
+            "recall": 0.8237,
+            "f1-score": 0.8804,
+            "support": 35083
+          }
+        },
+        "training_time_seconds": 22.19,
+        "vectorization_time_seconds": 25.63,
+        "evaluation_time_seconds": 6.25
+      },
+      "recommendation_engine": {
+        "algorithm": "Content-Based Cosine Similarity + Review Sentiment Weighting",
+        "feature_representation": "TF-IDF Vector Space (Condition, Profile, Review Aspects)"
+      }
+    },
+    "discrepancy_check": {
+      "accuracy_diff": 0.0,
+      "f1_macro_diff": 0.0,
+      "f1_weighted_diff": 0.0
+    }
+  },
+  "sentiment_robustness": [
+    {
+      "case": "Clearly positive",
+      "text": "This medication worked wonders! My symptoms disappeared in two days with zero side effects.",
+      "predicted_sentiment": "Positive",
+      "polarity_score": 0.9803,
+      "confidence": 0.9803,
+      "top_keywords": [
+        "symptoms disappeared",
+        "with zero",
+        "medication worked",
+        "zero side",
+        "days with"
+      ],
+      "valid": true
+    },
+    {
+      "case": "Clearly negative",
+      "text": "Horrible experience. Caused severe nausea, extreme vomiting, and did not relieve any pain.",
+      "predicted_sentiment": "Negative",
+      "polarity_score": 0.0009,
+      "confidence": 0.9934,
+      "top_keywords": [
+        "not relieve",
+        "caused severe",
+        "horrible experience",
+        "severe nausea",
+        "any pain"
+      ],
+      "valid": true
+    },
+    {
+      "case": "Neutral/Mixed",
+      "text": "The medicine was okay. It reduced the fever slightly but gave me a mild headache.",
+      "predicted_sentiment": "Neutral",
+      "polarity_score": 0.0475,
+      "confidence": 0.6041,
+      "top_keywords": [
+        "the fever",
+        "slightly but",
+        "it reduced",
+        "mild headache",
+        "but gave"
+      ],
+      "valid": true
+    },
+    {
+      "case": "Negation",
+      "text": "I did not experience any improvement at all, and it is not worth taking.",
+      "predicted_sentiment": "Negative",
+      "polarity_score": 0.0145,
+      "confidence": 0.9674,
+      "top_keywords": [
+        "worth taking",
+        "any improvement",
+        "not experience",
+        "experience any",
+        "all and"
+      ],
+      "valid": true
+    },
+    {
+      "case": "Short review",
+      "text": "Great drug!",
+      "predicted_sentiment": "Positive",
+      "polarity_score": 0.7669,
+      "confidence": 0.7669,
+      "top_keywords": [
+        "great drug",
+        "drug",
+        "great"
+      ],
+      "valid": true
+    },
+    {
+      "case": "Longer review",
+      "text": "I have been taking this prescription for six months after being diagnosed with chronic hypertension. Overall my blood pressure stabilized from 150/95 down to 120/80. I experienced mild dry cough during the first two weeks, but it subsided completely.",
+      "predicted_sentiment": "Positive",
+      "polarity_score": 0.5214,
+      "confidence": 0.5214,
+      "top_keywords": [
+        "120 80",
+        "it subsided",
+        "experienced mild",
+        "overall my",
+        "to 120"
+      ],
+      "valid": true
+    },
+    {
+      "case": "Punctuation-heavy",
+      "text": "AMAZING!!! Best treatment EVER :) 10/10 !!!",
+      "predicted_sentiment": "Positive",
+      "polarity_score": 0.9982,
+      "confidence": 0.9982,
+      "top_keywords": [
+        "10 10",
+        "10",
+        "treatment",
+        "amazing",
+        "best"
+      ],
+      "valid": true
+    },
+    {
+      "case": "Empty/Whitespace",
+      "text": "   \n\t  ",
+      "predicted_sentiment": "Neutral",
+      "polarity_score": 0.5,
+      "confidence": 0.33,
+      "top_keywords": [],
+      "valid": true
+    },
+    {
+      "case": "Unusual characters",
+      "text": "Taking 500mg @ bedtime... feeling #better :) & 100% fine!",
+      "predicted_sentiment": "Positive",
+      "polarity_score": 0.7986,
+      "confidence": 0.7986,
+      "top_keywords": [
+        "feeling better",
+        "500mg",
+        "bedtime",
+        "100",
+        "fine"
+      ],
+      "valid": true
+    }
+  ],
+  "recommendation_engine": {
+    "tests": [
+      {
+        "test": "Known condition (default weights)",
+        "condition": "Type 2 Diabetes",
+        "candidate_count": 97,
+        "top_drug": "Apidra",
+        "top_score": 0.7706,
+        "valid": true
+      },
+      {
+        "test": "Known condition (no symptoms)",
+        "condition": "Hypertension",
+        "candidate_count": 146,
+        "top_drug": "Amlodipine / olmesartan",
+        "top_score": 0.7711,
+        "valid": true
+      },
+      {
+        "test": "Known condition (custom weights)",
+        "condition": "Depression",
+        "candidate_count": 115,
+        "top_drug": "Alprazolam",
+        "top_score": 0.8424,
+        "valid": true
+      },
+      {
+        "test": "Unknown condition",
+        "condition": "NonExistentConditionX",
+        "candidate_count": 0,
+        "top_drug": null,
+        "top_score": null,
+        "valid": true
+      }
+    ],
+    "determinism": true
+  },
+  "drug_sentiment_aggregation": [
+    {
+      "drug_name": "Metformin",
+      "review_count": 344,
+      "recalculated_mean": 0.487,
+      "stored_score": 0.487,
+      "difference": 3.2e-05,
+      "match": true
+    },
+    {
+      "drug_name": "Lisinopril",
+      "review_count": 390,
+      "recalculated_mean": 0.3479,
+      "stored_score": 0.3479,
+      "difference": 3.8e-05,
+      "match": true
+    },
+    {
+      "drug_name": "Sertraline",
+      "review_count": 1859,
+      "recalculated_mean": 0.5842,
+      "stored_score": 0.5842,
+      "difference": 1e-05,
+      "match": true
+    },
+    {
+      "drug_name": "Levothyroxine",
+      "review_count": 376,
+      "recalculated_mean": 0.4612,
+      "stored_score": 0.4612,
+      "difference": 1.9e-05,
+      "match": true
+    },
+    {
+      "drug_name": "Amlodipine",
+      "review_count": 250,
+      "recalculated_mean": 0.3383,
+      "stored_score": 0.3383,
+      "difference": 4.8e-05,
+      "match": true
+    }
+  ],
+  "safety_engine": {
+    "A: No matching rule": {
+      "status": "NO_KNOWN_CONFLICT",
+      "pass": true
+    },
+    "B: Allergy conflict": {
+      "status": "FILTERED_SAFETY_CONFLICT",
+      "pass": true
+    },
+    "C: Moderate DDI": {
+      "status": "WARNING",
+      "pass": true
+    },
+    "D: Severe DDI": {
+      "status": "FILTERED_SAFETY_CONFLICT",
+      "pass": true
+    },
+    "E: Age Contraindication": {
+      "status": "FILTERED_SAFETY_CONFLICT",
+      "pass": true
+    },
+    "F: Multiple conflicts priority": {
+      "status": "FILTERED_SAFETY_CONFLICT",
+      "pass": true
+    },
+    "G: Unknown allergy/med no fabrication": {
+      "status": "NO_KNOWN_CONFLICT",
+      "pass": true
+    }
+  },
+  "safety_traceability": {
+    "allergy_count": 30,
+    "ddi_count": 18,
+    "contraindication_count": 16,
+    "all_rules_traceable": true
+  },
+  "api_tests": {
+    "GET /api/v1/health": {
+      "code": 200,
+      "pass": true
+    },
+    "GET /api/v1/conditions": {
+      "code": 200,
+      "pass": true
+    },
+    "GET /api/v1/allergies": {
+      "code": 200,
+      "pass": true
+    },
+    "GET /api/v1/drugs": {
+      "code": 200,
+      "pass": true
+    },
+    "GET /api/v1/drugs/1": {
+      "code": 200,
+      "pass": true
+    },
+    "GET /api/v1/model/metrics": {
+      "code": 200,
+      "pass": true
+    },
+    "POST /api/v1/sentiment/analyze": {
+      "code": 200,
+      "pass": true
+    },
+    "POST /api/v1/recommend (Contract Check)": {
+      "code": 200,
+      "pass": true
+    },
+    "POST /api/v1/recommend (Invalid Age)": {
+      "code": 422,
+      "pass": true
+    },
+    "GET /api/v1/drugs/999999 (Nonexistent ID)": {
+      "code": 404,
+      "pass": true
+    }
+  },
+  "performance": {
+    "GET /api/v1/health": {
+      "repetitions": 20,
+      "avg_ms": 3.53,
+      "min_ms": 2.77,
+      "max_ms": 4.55
+    },
+    "POST /api/v1/recommend": {
+      "repetitions": 20,
+      "avg_ms": 54.75,
+      "min_ms": 49.04,
+      "max_ms": 69.8
+    },
+    "POST /api/v1/sentiment/analyze": {
+      "repetitions": 20,
+      "avg_ms": 35.81,
+      "min_ms": 30.89,
+      "max_ms": 45.91
+    },
+    "GET /api/v1/drugs (limit=10)": {
+      "repetitions": 20,
+      "avg_ms": 4.4,
+      "min_ms": 3.4,
+      "max_ms": 5.46
+    },
+    "GET /api/v1/drugs/1": {
+      "repetitions": 20,
+      "avg_ms": 3.75,
+      "min_ms": 3.05,
+      "max_ms": 4.63
+    }
+  },
+  "security_robustness": [
+    [
+      "SQL Injection in condition",
+      true,
+      "Safely handled (parameterized)"
+    ],
+    [
+      "Oversized Sentiment Text (140KB)",
+      true,
+      "Successfully analyzed without crash"
+    ],
+    [
+      "Malformed JSON payload",
+      true,
+      "422 Unprocessable Entity"
+    ]
+  ]
+}

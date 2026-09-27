@@ -1,0 +1,495 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Verified, traceable biomedical safety rules for representative benchmark drugs in the local dataset.",
+    "disclaimer": "Educational & research decision-support prototype only. Absence of a local rule does NOT establish clinical safety."
+  },
+  "allergies": [
+    {
+      "drug_name": "Lisinopril",
+      "allergen_class": "ACE Inhibitors",
+      "reaction_severity": "CRITICAL",
+      "notes": "Angioedema and severe anaphylactoid reactions.",
+      "source": "FDA SPL / DailyMed Label: Lisinopril"
+    },
+    {
+      "drug_name": "Enalapril",
+      "allergen_class": "ACE Inhibitors",
+      "reaction_severity": "CRITICAL",
+      "notes": "Hypersensitivity / angioedema risk.",
+      "source": "FDA SPL / DailyMed Label: Enalapril"
+    },
+    {
+      "drug_name": "Ramipril",
+      "allergen_class": "ACE Inhibitors",
+      "reaction_severity": "CRITICAL",
+      "notes": "Angioedema and cross-reactivity with ACE inhibitor class.",
+      "source": "FDA SPL / DailyMed Label: Ramipril"
+    },
+    {
+      "drug_name": "Losartan",
+      "allergen_class": "Angiotensin Receptor Blockers",
+      "reaction_severity": "HIGH",
+      "notes": "Hypersensitivity reactions to ARB class.",
+      "source": "FDA SPL / DailyMed Label: Losartan"
+    },
+    {
+      "drug_name": "Valsartan",
+      "allergen_class": "Angiotensin Receptor Blockers",
+      "reaction_severity": "HIGH",
+      "notes": "Hypersensitivity reactions to ARB class.",
+      "source": "FDA SPL / DailyMed Label: Valsartan"
+    },
+    {
+      "drug_name": "Amoxicillin",
+      "allergen_class": "Penicillins",
+      "reaction_severity": "CRITICAL",
+      "notes": "Severe IgE-mediated anaphylaxis, urticaria, bronchospasm.",
+      "source": "FDA SPL / DailyMed Label: Amoxicillin"
+    },
+    {
+      "drug_name": "Amoxicillin / clavulanate",
+      "allergen_class": "Penicillins",
+      "reaction_severity": "CRITICAL",
+      "notes": "Severe penicillin anaphylaxis.",
+      "source": "FDA SPL / DailyMed Label: Augmentin"
+    },
+    {
+      "drug_name": "Ampicillin",
+      "allergen_class": "Penicillins",
+      "reaction_severity": "CRITICAL",
+      "notes": "Penicillin hypersensitivity / anaphylaxis.",
+      "source": "FDA SPL / DailyMed Label: Ampicillin"
+    },
+    {
+      "drug_name": "Cephalexin",
+      "allergen_class": "Cephalosporins",
+      "reaction_severity": "HIGH",
+      "notes": "Cephalosporin allergy and potential cross-reactivity.",
+      "source": "FDA SPL / DailyMed Label: Cephalexin"
+    },
+    {
+      "drug_name": "Sulfamethoxazole / trimethoprim",
+      "allergen_class": "Sulfa drugs",
+      "reaction_severity": "CRITICAL",
+      "notes": "Severe sulfonamide reactions (Stevens-Johnson syndrome, TEN).",
+      "source": "FDA SPL / DailyMed Label: Bactrim"
+    },
+    {
+      "drug_name": "Celecoxib",
+      "allergen_class": "Sulfa drugs",
+      "reaction_severity": "HIGH",
+      "notes": "Celecoxib contains a sulfonamide moiety; contraindicated in sulfa allergy.",
+      "source": "FDA SPL / DailyMed Label: Celebrex"
+    },
+    {
+      "drug_name": "Celecoxib",
+      "allergen_class": "NSAIDs",
+      "reaction_severity": "HIGH",
+      "notes": "NSAID-induced asthma, urticaria, or allergic reactions.",
+      "source": "FDA SPL / DailyMed Label: Celebrex"
+    },
+    {
+      "drug_name": "Ibuprofen",
+      "allergen_class": "NSAIDs",
+      "reaction_severity": "HIGH",
+      "notes": "Anaphylactoid reactions, bronchospasm in aspirin/NSAID-sensitive patients.",
+      "source": "FDA SPL / DailyMed Label: Ibuprofen"
+    },
+    {
+      "drug_name": "Naproxen",
+      "allergen_class": "NSAIDs",
+      "reaction_severity": "HIGH",
+      "notes": "Severe hypersensitivity and cross-reactivity with other NSAIDs.",
+      "source": "FDA SPL / DailyMed Label: Naproxen"
+    },
+    {
+      "drug_name": "Aspirin",
+      "allergen_class": "NSAIDs",
+      "reaction_severity": "HIGH",
+      "notes": "Aspirin-exacerbated respiratory disease (AERD) and anaphylactoid shock.",
+      "source": "FDA SPL / DailyMed Label: Aspirin"
+    },
+    {
+      "drug_name": "Aspirin",
+      "allergen_class": "Salicylates",
+      "reaction_severity": "HIGH",
+      "notes": "Hypersensitivity to salicylate compounds.",
+      "source": "FDA SPL / DailyMed Label: Aspirin"
+    },
+    {
+      "drug_name": "Azithromycin",
+      "allergen_class": "Macrolides",
+      "reaction_severity": "HIGH",
+      "notes": "Macrolide hypersensitivity and angioedema.",
+      "source": "FDA SPL / DailyMed Label: Azithromycin"
+    },
+    {
+      "drug_name": "Clarithromycin",
+      "allergen_class": "Macrolides",
+      "reaction_severity": "HIGH",
+      "notes": "Severe allergic reactions to macrolide antibiotics.",
+      "source": "FDA SPL / DailyMed Label: Biaxin"
+    },
+    {
+      "drug_name": "Erythromycin",
+      "allergen_class": "Macrolides",
+      "reaction_severity": "HIGH",
+      "notes": "Macrolide antibiotic hypersensitivity.",
+      "source": "FDA SPL / DailyMed Label: Erythromycin"
+    },
+    {
+      "drug_name": "Ciprofloxacin",
+      "allergen_class": "Fluoroquinolones",
+      "reaction_severity": "HIGH",
+      "notes": "Fluoroquinolone hypersensitivity, vasculitis, serum sickness.",
+      "source": "FDA SPL / DailyMed Label: Ciprofloxacin"
+    },
+    {
+      "drug_name": "Levofloxacin",
+      "allergen_class": "Fluoroquinolones",
+      "reaction_severity": "HIGH",
+      "notes": "Severe anaphylactic reactions to quinolone class.",
+      "source": "FDA SPL / DailyMed Label: Levaquin"
+    },
+    {
+      "drug_name": "Doxycycline",
+      "allergen_class": "Tetracyclines",
+      "reaction_severity": "HIGH",
+      "notes": "Hypersensitivity, photosensitivity, and DRESS syndrome.",
+      "source": "FDA SPL / DailyMed Label: Doxycycline"
+    },
+    {
+      "drug_name": "Metoprolol",
+      "allergen_class": "Beta Blockers",
+      "reaction_severity": "HIGH",
+      "notes": "Hypersensitivity to metoprolol and related beta-adrenergic antagonists.",
+      "source": "FDA SPL / DailyMed Label: Metoprolol"
+    },
+    {
+      "drug_name": "Atenolol",
+      "allergen_class": "Beta Blockers",
+      "reaction_severity": "HIGH",
+      "notes": "Hypersensitivity to atenolol or beta-blockers.",
+      "source": "FDA SPL / DailyMed Label: Atenolol"
+    },
+    {
+      "drug_name": "Amlodipine",
+      "allergen_class": "Calcium Channel Blockers",
+      "reaction_severity": "HIGH",
+      "notes": "Dihydropyridine calcium channel blocker hypersensitivity.",
+      "source": "FDA SPL / DailyMed Label: Amlodipine"
+    },
+    {
+      "drug_name": "Atorvastatin",
+      "allergen_class": "Statins",
+      "reaction_severity": "HIGH",
+      "notes": "HMG-CoA reductase inhibitor hypersensitivity.",
+      "source": "FDA SPL / DailyMed Label: Atorvastatin"
+    },
+    {
+      "drug_name": "Simvastatin",
+      "allergen_class": "Statins",
+      "reaction_severity": "HIGH",
+      "notes": "Statin hypersensitivity and immune-mediated necrotizing myopathy.",
+      "source": "FDA SPL / DailyMed Label: Simvastatin"
+    },
+    {
+      "drug_name": "Tramadol",
+      "allergen_class": "Opioids",
+      "reaction_severity": "CRITICAL",
+      "notes": "Opioid hypersensitivity, severe respiratory depression, and anaphylaxis.",
+      "source": "FDA SPL / DailyMed Label: Tramadol"
+    },
+    {
+      "drug_name": "Morphine",
+      "allergen_class": "Opioids",
+      "reaction_severity": "CRITICAL",
+      "notes": "Severe histamine release, bronchospasm, and opioid anaphylaxis.",
+      "source": "FDA SPL / DailyMed Label: Morphine"
+    },
+    {
+      "drug_name": "Oxycodone",
+      "allergen_class": "Opioids",
+      "reaction_severity": "CRITICAL",
+      "notes": "Severe hypersensitivity and respiratory arrest.",
+      "source": "FDA SPL / DailyMed Label: Oxycodone"
+    }
+  ],
+  "interactions": [
+    {
+      "drug_a": "Warfarin",
+      "drug_b": "Aspirin",
+      "severity": "HIGH",
+      "interaction_mechanism": "Combined vitamin K antagonism and platelet COX-1 inhibition significantly increases risk of major gastrointestinal and intracranial hemorrhage.",
+      "clinical_action": "Avoid concurrent use unless strictly clinically monitored with frequent INR testing.",
+      "source": "FDA SPL / DailyMed: Warfarin Black Box Warning"
+    },
+    {
+      "drug_a": "Warfarin",
+      "drug_b": "Ibuprofen",
+      "severity": "HIGH",
+      "interaction_mechanism": "NSAIDs competitively displace warfarin from protein binding sites and inhibit platelet aggregation, markedly elevating bleeding risk.",
+      "clinical_action": "Avoid co-administration; use alternative analgesics.",
+      "source": "FDA SPL / DailyMed: Warfarin Warnings"
+    },
+    {
+      "drug_a": "Warfarin",
+      "drug_b": "Naproxen",
+      "severity": "HIGH",
+      "interaction_mechanism": "Dual inhibition of hemostasis and direct gastric mucosal injury lead to severe upper GI hemorrhage.",
+      "clinical_action": "Avoid combination; monitor PT/INR closely if unavoidable.",
+      "source": "FDA SPL / DailyMed: Naproxen Drug Interactions"
+    },
+    {
+      "drug_a": "Warfarin",
+      "drug_b": "Ciprofloxacin",
+      "severity": "HIGH",
+      "interaction_mechanism": "Ciprofloxacin inhibits hepatic CYP1A2/CYP3A4 metabolism of warfarin, inducing marked INR prolongation and severe bleeding.",
+      "clinical_action": "Monitor INR frequently; adjust warfarin dosage or select alternative antibiotic.",
+      "source": "FDA SPL / DailyMed: Ciprofloxacin Drug Interactions"
+    },
+    {
+      "drug_a": "Lisinopril",
+      "drug_b": "Potassium chloride",
+      "severity": "HIGH",
+      "interaction_mechanism": "ACE inhibition decreases aldosterone secretion, impairing renal potassium excretion; potassium supplementation precipitates life-threatening hyperkalemia and cardiac arrest.",
+      "clinical_action": "Avoid concomitant potassium supplementation unless close serum potassium monitoring is maintained.",
+      "source": "FDA SPL / DailyMed: Lisinopril Warnings"
+    },
+    {
+      "drug_a": "Lisinopril",
+      "drug_b": "Spironolactone",
+      "severity": "HIGH",
+      "interaction_mechanism": "Concomitant potassium-sparing diuretic and ACE inhibitor causes additive potassium retention leading to severe hyperkalemia.",
+      "clinical_action": "Monitor serum electrolytes and renal function frequently.",
+      "source": "FDA SPL / DailyMed: Aldactone Label"
+    },
+    {
+      "drug_a": "Lisinopril",
+      "drug_b": "Ibuprofen",
+      "severity": "MODERATE",
+      "interaction_mechanism": "NSAID inhibition of renal prostaglandins attenuates antihypertensive effect of ACE inhibitors and increases risk of acute renal deterioration.",
+      "clinical_action": "Monitor blood pressure and renal function; ensure patient hydration.",
+      "source": "FDA SPL / DailyMed: Lisinopril Drug Interactions"
+    },
+    {
+      "drug_a": "Losartan",
+      "drug_b": "Potassium chloride",
+      "severity": "HIGH",
+      "interaction_mechanism": "Angiotensin II receptor blockade reduces aldosterone levels, leading to potassium accumulation; potassium supplementation risks severe hyperkalemia.",
+      "clinical_action": "Avoid routine potassium supplementation; monitor serum potassium.",
+      "source": "FDA SPL / DailyMed: Cozaar Label"
+    },
+    {
+      "drug_a": "Sertraline",
+      "drug_b": "Tramadol",
+      "severity": "HIGH",
+      "interaction_mechanism": "Concurrent SSRI and tramadol use increases central serotonin activity and lowers seizure threshold, precipitating Serotonin Syndrome.",
+      "clinical_action": "Avoid combination or monitor closely for signs of serotonin toxicity (tremor, hyperreflexia, hyperthermia).",
+      "source": "FDA SPL / DailyMed: Ultram Label"
+    },
+    {
+      "drug_a": "Fluoxetine",
+      "drug_b": "Tramadol",
+      "severity": "HIGH",
+      "interaction_mechanism": "Fluoxetine inhibits CYP2D6 metabolism of tramadol and exerts additive serotonergic effects, significantly increasing seizure and serotonin syndrome risks.",
+      "clinical_action": "Avoid concomitant administration.",
+      "source": "FDA SPL / DailyMed: Prozac Warnings"
+    },
+    {
+      "drug_a": "Escitalopram",
+      "drug_b": "Tramadol",
+      "severity": "HIGH",
+      "interaction_mechanism": "Additive serotonergic effects increase the risk of Serotonin Syndrome and seizures.",
+      "clinical_action": "Avoid co-administration; consider non-serotonergic analgesics.",
+      "source": "FDA SPL / DailyMed: Lexapro Label"
+    },
+    {
+      "drug_a": "Duloxetine",
+      "drug_b": "Tramadol",
+      "severity": "HIGH",
+      "interaction_mechanism": "SNRI combined with tramadol causes potent serotonin reuptake inhibition, creating high risk for Serotonin Syndrome.",
+      "clinical_action": "Avoid combination.",
+      "source": "FDA SPL / DailyMed: Cymbalta Label"
+    },
+    {
+      "drug_a": "Metoprolol",
+      "drug_b": "Fluoxetine",
+      "severity": "MODERATE",
+      "interaction_mechanism": "Fluoxetine is a potent CYP2D6 inhibitor, substantially increasing plasma metoprolol concentrations and enhancing bradycardia and heart block risks.",
+      "clinical_action": "Reduce metoprolol dose and monitor heart rate and ECG.",
+      "source": "FDA SPL / DailyMed: Toprol-XL Drug Interactions"
+    },
+    {
+      "drug_a": "Amlodipine",
+      "drug_b": "Simvastatin",
+      "severity": "MODERATE",
+      "interaction_mechanism": "Amlodipine increases systemic exposure to simvastatin via CYP3A4 competition, increasing risk of myopathy and rhabdomyolysis.",
+      "clinical_action": "Limit simvastatin dosage to a maximum of 20 mg daily when prescribed with amlodipine.",
+      "source": "FDA Drug Safety Communication: Simvastatin Drug Interactions"
+    },
+    {
+      "drug_a": "Methotrexate",
+      "drug_b": "Ibuprofen",
+      "severity": "HIGH",
+      "interaction_mechanism": "NSAIDs decrease renal tubular clearance of methotrexate, causing toxic systemic accumulation, fatal bone marrow suppression, and severe GI toxicity.",
+      "clinical_action": "Avoid NSAIDs in patients receiving moderate-to-high dose methotrexate.",
+      "source": "FDA SPL / DailyMed: Methotrexate Black Box Warning"
+    },
+    {
+      "drug_a": "Methotrexate",
+      "drug_b": "Naproxen",
+      "severity": "HIGH",
+      "interaction_mechanism": "Naproxen reduces methotrexate renal excretion, precipitating severe methotrexate toxicity and pancytopenia.",
+      "clinical_action": "Avoid co-administration.",
+      "source": "FDA SPL / DailyMed: Methotrexate Label"
+    },
+    {
+      "drug_a": "Aspirin",
+      "drug_b": "Ibuprofen",
+      "severity": "MODERATE",
+      "interaction_mechanism": "Ibuprofen competitively interferes with the irreversible antiplatelet effect of low-dose aspirin, reducing aspirin's cardioprotective efficacy.",
+      "clinical_action": "Take ibuprofen at least 8 hours before or 30 minutes after immediate-release aspirin.",
+      "source": "FDA Drug Safety Communication: Ibuprofen and Aspirin"
+    },
+    {
+      "drug_a": "Atorvastatin",
+      "drug_b": "Clarithromycin",
+      "severity": "HIGH",
+      "interaction_mechanism": "Clarithromycin strongly inhibits CYP3A4, elevating atorvastatin exposure by several-fold and increasing risk of severe rhabdomyolysis and acute renal failure.",
+      "clinical_action": "Avoid combination or withhold atorvastatin therapy during clarithromycin course.",
+      "source": "FDA SPL / DailyMed: Lipitor Warnings"
+    }
+  ],
+  "contraindications": [
+    {
+      "drug_name": "Lisinopril",
+      "contraindication_type": "PREGNANCY",
+      "trigger_value": "Pregnancy",
+      "severity": "ABSOLUTE",
+      "reason": "Black Box Warning: ACE inhibitors act directly on renin-angiotensin system, causing oligohydramnios, severe fetal renal damage, skeletal deformities, and fetal death.",
+      "source": "FDA SPL: Lisinopril Black Box Warning"
+    },
+    {
+      "drug_name": "Losartan",
+      "contraindication_type": "PREGNANCY",
+      "trigger_value": "Pregnancy",
+      "severity": "ABSOLUTE",
+      "reason": "Boxed Warning: Fetotoxicity and neonatal morbidity/death. Discontinue immediately when pregnancy is detected.",
+      "source": "FDA SPL: Losartan Boxed Warning"
+    },
+    {
+      "drug_name": "Warfarin",
+      "contraindication_type": "PREGNANCY",
+      "trigger_value": "Pregnancy",
+      "severity": "ABSOLUTE",
+      "reason": "Known teratogen causing fetal warfarin syndrome, nasal hypoplasia, stippled epiphyses, and fatal fetal hemorrhage.",
+      "source": "FDA SPL: Coumadin Contraindications"
+    },
+    {
+      "drug_name": "Atorvastatin",
+      "contraindication_type": "PREGNANCY",
+      "trigger_value": "Pregnancy",
+      "severity": "ABSOLUTE",
+      "reason": "Cholesterol and other products of cholesterol biosynthesis are essential for fetal development; statins risk fetal harm.",
+      "source": "FDA SPL: Lipitor Contraindications"
+    },
+    {
+      "drug_name": "Simvastatin",
+      "contraindication_type": "PREGNANCY",
+      "trigger_value": "Pregnancy",
+      "severity": "ABSOLUTE",
+      "reason": "HMG-CoA reductase inhibitors are contraindicated during pregnancy due to potential fetal toxicity.",
+      "source": "FDA SPL: Zocor Contraindications"
+    },
+    {
+      "drug_name": "Ibuprofen",
+      "contraindication_type": "CONDITION",
+      "trigger_value": "Peptic Ulcer Disease",
+      "severity": "ABSOLUTE",
+      "reason": "Nonselective COX inhibition decreases gastroprotective prostaglandins, precipitating severe GI ulceration, hemorrhage, and perforation.",
+      "source": "FDA SPL: Motrin Contraindications"
+    },
+    {
+      "drug_name": "Naproxen",
+      "contraindication_type": "CONDITION",
+      "trigger_value": "Peptic Ulcer Disease",
+      "severity": "ABSOLUTE",
+      "reason": "High risk of life-threatening gastrointestinal bleeding and perforation in patients with active peptic ulceration.",
+      "source": "FDA SPL: Aleve Warnings"
+    },
+    {
+      "drug_name": "Celecoxib",
+      "contraindication_type": "CONDITION",
+      "trigger_value": "Coronary Artery Bypass Graft (CABG)",
+      "severity": "ABSOLUTE",
+      "reason": "Boxed Warning: Contraindicated for perioperative pain management in CABG surgery due to elevated risk of myocardial infarction and stroke.",
+      "source": "FDA SPL: Celebrex Boxed Warning"
+    },
+    {
+      "drug_name": "Metoprolol",
+      "contraindication_type": "CONDITION",
+      "trigger_value": "Severe Bradycardia",
+      "severity": "ABSOLUTE",
+      "reason": "Beta-1 blockade decreases sinus node discharge rate, risking profound cardiogenic shock and cardiac arrest.",
+      "source": "FDA SPL: Lopressor Contraindications"
+    },
+    {
+      "drug_name": "Metoprolol",
+      "contraindication_type": "CONDITION",
+      "trigger_value": "Second or Third-Degree Heart Block",
+      "severity": "ABSOLUTE",
+      "reason": "Depression of atrioventricular conduction can induce complete heart block or severe asystole.",
+      "source": "FDA SPL: Toprol Contraindications"
+    },
+    {
+      "drug_name": "Metformin",
+      "contraindication_type": "CONDITION",
+      "trigger_value": "Severe Renal Impairment",
+      "severity": "ABSOLUTE",
+      "reason": "Contraindicated in severe renal failure (eGFR < 30 mL/min/1.73m2) due to dangerous accumulation and high mortality lactic acidosis.",
+      "source": "FDA SPL: Glucophage Label"
+    },
+    {
+      "drug_name": "Aspirin",
+      "contraindication_type": "AGE",
+      "trigger_value": "<18",
+      "severity": "ABSOLUTE",
+      "reason": "Salicylate administration in pediatric patients with fever/viral infection (chickenpox or flu) is strongly associated with Reye syndrome.",
+      "source": "FDA SPL / CDC: Aspirin in Pediatric Viral Illness"
+    },
+    {
+      "drug_name": "Ciprofloxacin",
+      "contraindication_type": "AGE",
+      "trigger_value": "<18",
+      "severity": "RELATIVE",
+      "reason": "Fluoroquinolones cause arthropathy and articular cartilage erosion in weight-bearing joints in juvenile animal and pediatric studies.",
+      "source": "FDA SPL: Cipro Pediatric Precautions"
+    },
+    {
+      "drug_name": "Doxycycline",
+      "contraindication_type": "AGE",
+      "trigger_value": "<8",
+      "severity": "ABSOLUTE",
+      "reason": "Tetracyclines deposit in calcium during odontogenesis, causing permanent yellow-gray tooth discoloration and enamel hypoplasia.",
+      "source": "FDA SPL: Vibramycin Pediatric Warning"
+    },
+    {
+      "drug_name": "Bupropion",
+      "contraindication_type": "CONDITION",
+      "trigger_value": "Seizure Disorder",
+      "severity": "ABSOLUTE",
+      "reason": "Bupropion significantly lowers the epileptic seizure threshold in a dose-dependent manner; strictly contraindicated in seizure disorders.",
+      "source": "FDA SPL: Wellbutrin Contraindications"
+    },
+    {
+      "drug_name": "Tramadol",
+      "contraindication_type": "AGE",
+      "trigger_value": "<12",
+      "severity": "ABSOLUTE",
+      "reason": "Boxed Warning: Contraindicated in all children younger than 12 years of age due to life-threatening respiratory depression and death.",
+      "source": "FDA SPL: Tramadol Boxed Warning"
+    }
+  ]
+}
