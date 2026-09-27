@@ -326,5 +326,5 @@ python -m pytest backend/tests/ -v
 ## 12. License & Academic Credits
 
 - **Author:** [Ashish Pal](https://github.com/Ashishpal110)
-- **Degree:** Bachelor of Technology (B.Tech) in Computer Science & Engineering
+- **Degree:** Bachelor of Technology (B.Tech) in Artificial Intelligence and Machine Leaning. 
 - **License:** [MIT License](LICENSE)
